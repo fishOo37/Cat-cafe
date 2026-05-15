@@ -1,279 +1,221 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>My Warm Cat Café Forest</title>
-
+<meta charset="UTF-8">
+<title>Olivia’s Cozy Café</title>
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: "Georgia", serif;
-        background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1950&q=80');
-        background-size: cover;
-        background-position: center;
-        color: #4a3b2a;
-        text-shadow: 0 0 4px rgba(255, 240, 210, 0.7);
-        overflow-x: hidden;
-    }
-
-    .overlay {
-        background: rgba(255, 235, 210, 0.45);
-        backdrop-filter: blur(3px);
-        min-height: 100vh;
-        padding: 40px;
-    }
-
-    h1 {
-        font-size: 42px;
-        margin-bottom: 10px;
-    }
-
-    .section {
-        background: rgba(255, 250, 240, 0.7);
-        padding: 20px;
-        border-radius: 14px;
-        margin: 20px 0;
-        max-width: 650px;
-        box-shadow: 0 0 10px rgba(120, 90, 60, 0.2);
-    }
-
-    a {
-        color: #6b4f3a;
-        font-weight: bold;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    /* Café Magic Button */
-    #magicButton {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: #f7e3c3;
-        border: 2px solid #b08a63;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-size: 18px;
-        cursor: pointer;
-        box-shadow: 0 0 10px rgba(120, 90, 60, 0.3);
-        transition: 0.2s;
-        z-index: 999;
-    }
-
-    #magicButton:hover {
-        background: #f3d7ad;
-        transform: scale(1.05);
-    }
-
-    /* Corner Cats */
-    #cat1, #cat2 {
-        position: fixed;
-        width: 120px;
-        cursor: pointer;
-        transition: transform 0.2s ease;
-        z-index: 900;
-    }
-
-    #cat1 { bottom: 20px; right: 20px; }
-    #cat2 { bottom: 20px; left: 20px; }
-
-    #cat1:hover, #cat2:hover {
-        transform: scale(1.1);
-    }
-
-    /* Petals */
-    .petal {
-        position: fixed;
-        top: -10px;
-        width: 20px;
-        height: 20px;
-        background: pink;
-        border-radius: 50%;
-        opacity: 0.7;
-        animation: fall 8s linear infinite;
-        display: none;
-        z-index: 100;
-    }
-
-    @keyframes fall {
-        0% { transform: translateY(0) rotate(0deg); }
-        100% { transform: translateY(120vh) rotate(360deg); }
-    }
-
-    /* Fireflies */
-    .firefly {
-        position: fixed;
-        width: 6px;
-        height: 6px;
-        background: rgba(255, 255, 200, 0.8);
-        border-radius: 50%;
-        box-shadow: 0 0 8px rgba(255, 255, 200, 1);
-        animation: drift 6s ease-in-out infinite;
-        display: none;
-        z-index: 100;
-    }
-
-    @keyframes drift {
-        0% { transform: translate(0, 0); }
-        50% { transform: translate(40px, -20px); }
-        100% { transform: translate(0, 0); }
-    }
-
-    /* Steam */
-    .steam {
-        position: fixed;
-        bottom: 120px;
-        right: 80px;
-        width: 20px;
-        height: 40px;
-        background: rgba(255, 255, 255, 0.5);
-        border-radius: 50%;
-        filter: blur(8px);
-        animation: steamRise 4s infinite;
-        display: none;
-        z-index: 100;
-    }
-
-    @keyframes steamRise {
-        0% { transform: translateY(0) scale(1); opacity: 0.6; }
-        100% { transform: translateY(-80px) scale(1.4); opacity: 0; }
-    }
-
-    /* Chalkboard Menu */
-    #menuBoard {
-        position: fixed;
-        top: 120px;
-        left: 20px;
-        width: 200px;
-        padding: 20px;
-        background: #2b2b2b;
-        color: #f5f5f5;
-        border: 4px solid #3d3d3d;
-        border-radius: 10px;
-        font-family: "Courier New", monospace;
-        box-shadow: 0 0 10px rgba(0,0,0,0.4);
-        display: none;
-        z-index: 900;
-    }
-</style>
-</head>
-
-<body>
-
-<button id="magicButton">☕ Café Magic: OFF</button>
-
-<div id="menuBoard">
-<h3>☕ Café Menu</h3>
-<ul>
-<li>Latte</li>
-<li>Matcha</li>
-<li>Hot Chocolate</li>
-<li>Croissant</li>
-<li>Cinnamon Roll</li>
-</ul>
-</div>
-
-<div class="overlay">
-
-<h1>🐾☕ Welcome to Your Warm Cat Café Forest ☕🐾</h1>
-<p>A golden morning, soft moss, warm lights… and a tiny café cat keeping you company.</p>
-
-<div class="section">
-<h2>🌼 Quick Links</h2>
-<ul>
-<li><a href="https://www.google.com" target="_blank">Google</a></li>
-<li><a href="https://classroom.google.com" target="_blank">Google Classroom</a></li>
-<li><a href="https://drive.google.com" target="_blank">Google Drive</a></li>
-<li><a href="https://music.youtube.com" target="_blank">YouTube Music</a></li>
-<li><a href="https://www.pinterest.com" target="_blank">Moodboard</a></li>
-</ul>
-</div>
-
-<div class="section">
-<h2>🍄 Daily Forest Thought</h2>
-<p>“Move gently today. Warm light and soft paws are guiding you.”</p>
-</div>
-
-<div class="section">
-<h2>🌙 Little Tasks</h2>
-
-<label><input type="checkbox" class="task" data-id="task1"> Finish one small thing</label><br>
-<label><input type="checkbox" class="task" data-id="task2"> Drink water</label><br>
-<label><input type="checkbox" class="task" data-id="task3"> Stretch your shoulders</label><br>
-<label><input type="checkbox" class="task" data-id="task4"> Step outside for a moment</label><br>
-
-</div>
-
-<div class="section">
-<h2>🌸 Moodboard</h2>
-<p>Add your favourite images here — cats, warm drinks, moss, golden light.</p>
-</div>
-
-</div>
-
-<!-- Cats -->
-<img id="cat1" src="https://i.imgur.com/3ZQ3Z4R.png">
-<img id="cat2" src="https://i.imgur.com/3ZQ3Z4R.png">
-
-<!-- Magic Elements -->
-<div class="petal"></div>
-<div class="petal"></div>
-<div class="petal"></div>
-
-<div class="firefly"></div>
-<div class="firefly"></div>
-<div class="firefly"></div>
-
-<div class="steam"></div>
-<div class="steam"></div>
-
-<script>
-// Checkbox saving
-document.querySelectorAll('.task').forEach(box => {
-    const id = box.getAttribute('data-id');
-    const saved = localStorage.getItem(id);
-    if (saved === 'true') box.checked = true;
-
-    box.addEventListener('change', () => {
-        localStorage.setItem(id, box.checked);
-    });
-});
-
-// Cat interaction
-function addCatSound(cat) {
-    const sounds = [
-        "https://www.myinstants.com/media/sounds/cat-meow.mp3",
-        "https://www.myinstants.com/media/sounds/purr.mp3"
-    ];
-    cat.addEventListener("click", () => {
-        cat.style.transform = "scale(1.15)";
-        setTimeout(() => cat.style.transform = "scale(1)", 200);
-        new Audio(sounds[Math.floor(Math.random() * sounds.length)]).play();
-    });
+/* ---------------- GLOBAL PAGE STYLE ---------------- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: url('https://img.magnific.com/premium-photo/serene-sunset-scene-featuring-sleeping-cat-balcony-surrounded-by-plants-books_1383414-2910.jpg?semt=ais_hybrid&w=740&q=80') center/cover no-repeat fixed;
+  animation: warmGlow 10s ease-in-out infinite alternate;
+  overflow-x: hidden;
 }
 
-addCatSound(document.getElementById("cat1"));
-addCatSound(document.getElementById("cat2"));
+/* Warm ambient glow */
+@keyframes warmGlow {
+  0% { filter: brightness(1) saturate(1); }
+  100% { filter: brightness(1.15) saturate(1.2); }
+}
 
-// Café Magic Toggle
-let magicOn = false;
+/* ---------------- FALLING LEAVES ---------------- */
+.leaf {
+  position: fixed;
+  top: -10vh;
+  width: 25px;
+  height: 25px;
+  background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><path fill="%23d49a6a" d="M20 0 C5 10 0 25 10 35 C25 40 35 25 30 10 Z"/></svg>');
+  background-size: cover;
+  opacity: 0.8;
+  animation: fall linear infinite;
+  pointer-events: none;
+}
 
-document.getElementById("magicButton").addEventListener("click", () => {
-    magicOn = !magicOn;
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg); }
+  100% { transform: translateY(110vh) rotate(360deg); }
+}
 
-    document.getElementById("magicButton").innerText =
-        magicOn ? "☕ Café Magic: ON" : "☕ Café Magic: OFF";
+/* ---------------- CORNER CATS ---------------- */
+.cat {
+  position: fixed;
+  width: 120px;
+  cursor: pointer;
+  z-index: 9999;
+  transition: transform 0.2s ease;
+}
 
-    document.querySelectorAll(".petal, .firefly, .steam").forEach(el => {
-        el.style.display = magicOn ? "block" : "none";
-    });
+.cat:hover {
+  transform: scale(1.1);
+}
 
-    document.getElementById("menuBoard").style.display =
-        magicOn ? "block" : "none";
+/* Anime cat SVG */
+.cat svg {
+  width: 100%;
+  height: auto;
+}
+
+/* Positions */
+#catLeft { bottom: 20px; left: 20px; }
+#catRight { bottom: 20px; right: 20px; }
+
+/* ---------------- MAGIC BUTTON ---------------- */
+#magicButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #ffddb3;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #0003;
+  transition: 0.3s;
+}
+
+#magicButton:hover {
+  background: #ffe8c9;
+}
+
+/* Glow mode */
+.glow {
+  filter: brightness(1.25) saturate(1.3);
+}
+
+/* ---------------- CHECKLIST ---------------- */
+#checklist {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  background: #ffffffcc;
+  padding: 15px;
+  border-radius: 10px;
+  width: 220px;
+  backdrop-filter: blur(5px);
+}
+
+/* ---------------- QUOTES ---------------- */
+#quoteBox {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 20px;
+  background: #ffffffcc;
+  padding: 10px 15px;
+  border-radius: 10px;
+  width: 350px;
+  backdrop-filter: blur(5px);
+}
+
+/* ---------------- LINKS ---------------- */
+a {
+  color: #8b4f2f;
+  font-weight: bold;
+}
+a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<!-- ---------------- QUOTE BOX ---------------- -->
+<div id="quoteBox">“A cozy day begins with a warm heart.”</div>
+
+<!-- ---------------- CHECKLIST ---------------- -->
+<div id="checklist">
+  <h3>To‑Do</h3>
+  <label><input type="checkbox" class="task"> Make coffee</label><br>
+  <label><input type="checkbox" class="task"> Pet the cats</label><br>
+  <label><input type="checkbox" class="task"> Relax & breathe</label><br>
+</div>
+
+<!-- ---------------- MAGIC BUTTON ---------------- -->
+<button id="magicButton">Magic Café Glow ✨</button>
+
+<!-- ---------------- ANIME CORNER CATS ---------------- -->
+<div id="catLeft" class="cat">
+  <!-- Cute drawn anime cat SVG -->
+  <svg viewBox="0 0 200 200">
+    <path fill="#fff" stroke="#000" stroke-width="4"
+      d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
+    <circle cx="75" cy="90" r="10" fill="#000"/>
+    <circle cx="125" cy="90" r="10" fill="#000"/>
+    <path d="M95 110 Q100 120 105 110" stroke="#000" stroke-width="4" fill="none"/>
+  </svg>
+</div>
+
+<div id="catRight" class="cat">
+  <svg viewBox="0 0 200 200">
+    <path fill="#fff" stroke="#000" stroke-width="4"
+      d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
+    <circle cx="75" cy="90" r="10" fill="#000"/>
+    <circle cx="125" cy="90" r="10" fill="#000"/>
+    <path d="M95 110 Q100 120 105 110" stroke="#000" stroke-width="4" fill="none"/>
+  </svg>
+</div>
+
+<!-- ---------------- AUDIO ---------------- -->
+<audio id="meowSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c8e90b9d1.mp3?filename=cat-meow-14536.mp3"></audio>
+<audio id="purrSound" src="https://cdn.pixabay.com/download/audio/2021/09/06/audio_4f3e3e0f52.mp3?filename=cat-purr-1-110120.mp3"></audio>
+
+<script>
+/* ---------------- FALLING LEAVES GENERATOR ---------------- */
+for (let i = 0; i < 12; i++) {
+  let leaf = document.createElement("div");
+  leaf.className = "leaf";
+  leaf.style.left = Math.random() * 100 + "vw";
+  leaf.style.animationDuration = 6 + Math.random() * 6 + "s";
+  leaf.style.animationDelay = Math.random() * 5 + "s";
+  document.body.appendChild(leaf);
+}
+
+/* ---------------- CAT INTERACTIONS ---------------- */
+const cats = document.querySelectorAll(".cat");
+const meow = document.getElementById("meowSound");
+const purr = document.getElementById("purrSound");
+
+cats.forEach(cat => {
+  cat.addEventListener("click", () => {
+    meow.currentTime = 0;
+    meow.play();
+  });
+  cat.addEventListener("mouseenter", () => {
+    purr.currentTime = 0;
+    purr.play();
+  });
 });
+
+/* ---------------- MAGIC BUTTON ---------------- */
+document.getElementById("magicButton").addEventListener("click", () => {
+  document.body.classList.toggle("glow");
+});
+
+/* ---------------- CHECKLIST SAVE ---------------- */
+const tasks = document.querySelectorAll(".task");
+
+tasks.forEach((task, i) => {
+  task.checked = localStorage.getItem("task" + i) === "true";
+  task.addEventListener("change", () => {
+    localStorage.setItem("task" + i, task.checked);
+  });
+});
+
+/* ---------------- QUOTES ---------------- */
+const quotes = [
+  "“A cozy day begins with a warm heart.”",
+  "“Happiness is a cup of coffee and a good book.”",
+  "“Let the cats nap and the leaves fall.”",
+  "“Peace is brewed slowly, like coffee.”"
+];
+
+setInterval(() => {
+  document.getElementById("quoteBox").textContent =
+    quotes[Math.floor(Math.random() * quotes.length)];
+}, 10000);
 </script>
 
 </body>
