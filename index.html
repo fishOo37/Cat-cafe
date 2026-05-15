@@ -2,292 +2,449 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Cozy Café Home</title>
+<title>Olivia’s Cozy Café</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        background: url("https://img.magnific.com/premium-photo/serene-sunset-scene-featuring-sleeping-cat-balcony-surrounded-by-plants-books_1383414-2910.jpg?semt=ais_hybrid&w=740&q=80") no-repeat center center fixed;
-        background-size: cover;
-        font-family: "Segoe UI", sans-serif;
-        color: #fff;
-        overflow-x: hidden;
-    }
+/* -------------------- COLORS -------------------- */
+:root {
+  --accent:#f4b27a;
+  --soft:#f8d4a8;
+  --cream:#fff3e0;
+  --outline:#5b3a2a;
+  --blush:#f7a6a6;
+  --bg:#1a0f0a;
+  --text:#fdf5e9;
+  --muted:#e3d2c0;
+}
 
-    /* Soft overlay for warmth */
-    .overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.35);
-        backdrop-filter: blur(2px);
-        z-index: -1;
-    }
+/* -------------------- GLOBAL -------------------- */
+body {
+  margin:0;
+  font-family:"Segoe UI",sans-serif;
+  color:var(--text);
+  background:#1a0f0a;
+  overflow-x:hidden;
+  font-size:14px;
+}
 
-    /* Corner anime cats */
-    .corner-cat {
-        position: fixed;
-        width: 120px;
-        cursor: pointer;
-        transition: transform 0.2s ease;
-        z-index: 10;
-    }
-    .corner-cat:hover {
-        transform: scale(1.1);
-    }
+/* -------------------- BACKGROUND -------------------- */
+.background {
+  position:fixed; inset:0;
+  background:url("https://img.magnific.com/premium-photo/serene-sunset-scene-featuring-sleeping-cat-balcony-surrounded-by-plants-books_1383414-2910.jpg?semt=ais_hybrid&w=740&q=80")
+    center/cover no-repeat;
+  filter:blur(2px) brightness(0.7);
+  z-index:-2;
+}
+.overlay {
+  position:fixed; inset:0;
+  background:radial-gradient(circle at top,rgba(255,210,150,.35),transparent 55%),
+             linear-gradient(to bottom,rgba(15,8,5,.7),rgba(10,5,3,.95));
+  z-index:-1;
+}
+body.night .background { filter:blur(2px) brightness(0.4); }
+body.night .overlay {
+  background:radial-gradient(circle at top,rgba(120,160,255,.25),transparent 55%),
+             linear-gradient(to bottom,rgba(5,8,20,.9),rgba(3,5,12,.98));
+}
 
-    #cat-left { bottom: 10px; left: 10px; }
-    #cat-right { bottom: 10px; right: 10px; }
+/* -------------------- LEAVES -------------------- */
+.leaf {
+  position:fixed;
+  width:6px; height:10px;
+  background:rgba(255,200,140,.55);
+  border-radius:50%;
+  opacity:.5;
+  animation:fall linear infinite;
+  filter:blur(0.3px);
+}
+@keyframes fall {
+  0% { transform:translateY(-10vh) translateX(0) rotate(0); }
+  100% { transform:translateY(110vh) translateX(10px) rotate(120deg); }
+}
 
-    /* Pet animation */
-    @keyframes pet {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.15); }
-        100% { transform: scale(1); }
-    }
-    .petting {
-        animation: pet 0.4s ease;
-    }
+/* -------------------- SPARKLES -------------------- */
+.sparkle {
+  position:fixed;
+  width:4px; height:4px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 8px #fff;
+  animation:spark 6s linear infinite;
+}
+@keyframes spark {
+  0% { transform:translateY(100vh) scale(.4); opacity:0; }
+  20% { opacity:1; }
+  100% { transform:translateY(-10vh) scale(1); opacity:0; }
+}
 
-    /* Falling leaves */
-    .leaf {
-        position: fixed;
-        top: -20px;
-        width: 18px;
-        opacity: 0.7;
-        animation: fall linear infinite;
-        pointer-events: none;
-    }
-    @keyframes fall {
-        to {
-            transform: translateY(110vh) rotate(360deg);
-        }
-    }
+/* -------------------- GRID LAYOUT -------------------- */
+.container {
+  max-width:1100px;
+  margin:0 auto;
+  padding:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:20px;
+}
 
-    /* Main container */
-    .panel {
-        width: 420px;
-        background: rgba(0,0,0,0.55);
-        padding: 20px;
-        border-radius: 15px;
-        margin: 40px auto;
-        backdrop-filter: blur(4px);
-    }
+/* -------------------- CARDS -------------------- */
+.card {
+  background:rgba(35,22,18,.9);
+  border-radius:18px;
+  padding:15px;
+  box-shadow:0 18px 40px rgba(0,0,0,.55);
+}
+h1 { font-size:1.4rem; margin:0 0 10px; }
+h3 { font-size:1.1rem; margin:0 0 8px; }
+button {
+  background:linear-gradient(135deg,#f7c08a,#f39b7a);
+  border:none;
+  border-radius:999px;
+  padding:6px 14px;
+  font-weight:600;
+  color:#3b1f12;
+  cursor:pointer;
+}
+button:hover { filter:brightness(1.1); }
 
-    h2 { margin-top: 0; }
+/* -------------------- CATS -------------------- */
+.cat {
+  position:fixed;
+  width:100px; height:100px;
+  z-index:5;
+  cursor:pointer;
+}
+.cat svg { width:100%; height:100%; }
+.cat.left { bottom:10px; left:10px; }
+.cat.right { bottom:10px; right:10px; }
 
-    /* To‑do list */
-    .todo-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 8px;
-    }
-    .todo-item input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        margin-right: 10px;
-    }
-    .todo-item input[type="text"] {
-        flex: 1;
-        background: transparent;
-        border: none;
-        border-bottom: 1px solid #ccc;
-        color: #fff;
-        outline: none;
-    }
+.cat-body {
+  transform-origin:50% 60%;
+  animation:breath 4s ease-in-out infinite;
+}
+@keyframes breath {
+  0%,100% { transform:scale(1); }
+  50% { transform:scale(1.03); }
+}
 
-    /* Mood tracker */
-    .mood-box {
-        background: rgba(255,255,255,0.1);
-        padding: 10px;
-        border-radius: 10px;
-        margin-top: 10px;
-    }
+.cat.patting .cat-body {
+  animation:pat 0.4s ease;
+}
+@keyframes pat {
+  0% { transform:translateY(0) scale(1.03); }
+  50% { transform:translateY(2px) scale(1.06); }
+  100% { transform:translateY(0) scale(1.03); }
+}
 
-    /* Magic button */
-    .magic-btn {
-        margin-top: 15px;
-        padding: 10px 20px;
-        background: #ffb3d1;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-    .magic-btn:hover {
-        background: #ffcce0;
-    }
+.cat-face {
+  transition:transform 0.2s;
+}
+.cat.patting .cat-face {
+  transform:translateY(-1px);
+}
 
-    /* Links */
-    .links a {
-        display: inline-block;
-        margin-right: 10px;
-        color: #ffe6f2;
-        text-decoration: none;
-        font-weight: bold;
-    }
+.toast {
+  position:fixed;
+  left:50%; bottom:80px;
+  transform:translateX(-50%);
+  background:rgba(25,15,10,.96);
+  border-radius:999px;
+  padding:8px 16px;
+  font-size:.85rem;
+  border:1px solid rgba(255,255,255,.18);
+  opacity:0;
+  transition:.25s;
+}
+.toast.show {
+  opacity:1;
+  transform:translateX(-50%) translateY(-4px);
+}
 
-    /* Calendar */
-    .calendar-box {
-        margin-top: 10px;
-        padding: 10px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 10px;
-        text-align: center;
-    }
+/* -------------------- LINKS -------------------- */
+.links a {
+  display:inline-block;
+  margin:4px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(30,18,12,.9);
+  color:#ffd59b;
+  text-decoration:none;
+  font-size:.85rem;
+}
+.links a:hover {
+  background:rgba(50,30,20,.95);
+  color:#ffe9c7;
+}
 
+/* -------------------- TO‑DO LIST -------------------- */
+.todo-item {
+  display:flex;
+  align-items:center;
+  margin:6px 0;
+}
+.todo-item input[type="checkbox"] {
+  width:18px; height:18px;
+  margin-right:10px;
+  accent-color:#f4b27a;
+}
+.todo-item input[type="text"] {
+  flex:1;
+  background:transparent;
+  border:none;
+  border-bottom:1px dashed rgba(255,255,255,.2);
+  color:var(--text);
+  font-size:1rem;
+}
+.todo-item input[type="text"]:focus {
+  outline:none;
+  border-bottom:1px solid var(--accent);
+}
+.delete-btn {
+  margin-left:10px;
+  cursor:pointer;
+  color:#ffb3b3;
+  font-size:1.2rem;
+}
+
+/* -------------------- MOOD NOTEBOOK -------------------- */
+.mood-wrapper {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.mood-today {
+  background:rgba(50,30,20,.9);
+  border-radius:14px;
+  padding:12px;
+}
+.mood-row {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:6px;
+}
+.mood-row select {
+  background:rgba(20,10,5,.9);
+  color:var(--text);
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.2);
+  padding:4px 10px;
+}
+#moodNote {
+  width:100%;
+  min-height:60px;
+  margin-top:6px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(20,10,5,.9);
+  color:var(--text);
+  padding:6px 8px;
+  resize:vertical;
+}
+
+/* calendar */
+.mood-calendar {
+  background:rgba(50,30,20,.9);
+  border-radius:14px;
+  padding:12px;
+}
+.calendar-grid {
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:4px;
+  font-size:.75rem;
+}
+.calendar-day-header {
+  text-align:center;
+  color:var(--muted);
+}
+.calendar-cell {
+  height:32px;
+  border-radius:8px;
+  background:rgba(30,18,12,.9);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  border:1px solid transparent;
+}
+.calendar-cell.today {
+  border-color:var(--accent);
+}
+.calendar-cell span.date {
+  font-size:.7rem;
+  color:var(--muted);
+}
+.calendar-cell span.coffee {
+  font-size:1rem;
+}
+
+/* audio hidden */
+#lofiAudio, #meowAudio { display:none; }
 </style>
 </head>
-<body>
 
+<body>
+<div class="background"></div>
 <div class="overlay"></div>
 
-<!-- Anime corner cats -->
-<img id="cat-left" class="corner-cat" src="https://i.imgur.com/4yKXg7T.png">
-<img id="cat-right" class="corner-cat" src="https://i.imgur.com/2cV7x0H.png">
+<!-- -------------------- LEFT CAT -------------------- -->
+<div class="cat left">
+  <svg viewBox="0 0 200 200">
+    <g class="cat-body">
+      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
+        d="M60 130 Q40 110 50 85 Q60 60 95 55 Q130 50 150 75 Q165 95 155 120 Q145 145 110 150 Q80 150 60 130Z"/>
+      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
+        d="M150 120 Q170 130 175 145 Q165 155 155 150 Q150 140 150 120Z"/>
+    </g>
+    <g class="cat-face">
+      <path fill="#d9b48a" stroke="#5b3a2a" stroke-width="3"
+        d="M85 80 Q100 60 115 80 Q120 95 115 110 Q100 125 85 110 Q80 95 85 80Z"/>
+      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
+        d="M80 78 L75 60 L90 72Z"/>
+      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
+        d="M120 78 L125 60 L110 72Z"/>
+      <path d="M92 95 Q97 100 102 95" stroke="#5b3a2a" stroke-width="2" fill="none"/>
+      <path d="M108 95 Q113 100 118 95" stroke="#5b3a2a" stroke-width="2" fill="none"/>
+      <path d="M100 105 Q105 108 110 105" stroke="#5b3a2a" stroke-width="2" fill="none"/>
+      <circle cx="90" cy="102" r="3" fill="#f7a6a6" opacity=".7"/>
+      <circle cx="120" cy="102" r="3" fill="#f7a6a6" opacity=".7"/>
+    </g>
+  </svg>
+</div>
 
-<!-- Falling leaves -->
-<script>
-for (let i = 0; i < 12; i++) {
-    let leaf = document.createElement("img");
-    leaf.src = "https://i.imgur.com/1Q9Z1zE.png";
-    leaf.className = "leaf";
-    leaf.style.left = Math.random() * 100 + "vw";
-    leaf.style.animationDuration = 6 + Math.random() * 5 + "s";
-    leaf.style.animationDelay = Math.random() * 5 + "s";
-    document.body.appendChild(leaf);
-}
-</script>
+<!-- -------------------- RIGHT CAT -------------------- -->
+<div class="cat right">
+  <svg viewBox="0 0 200 200">
+    <g class="cat-body">
+      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
+        d="M60 130 Q70 100 110 95 Q145 95 165 115 Q175 130 165 145 Q150 160 115 155 Q80 150 60 130Z"/>
+      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
+        d="M165 135 Q185 140 190 155 Q180 165 170 160 Q168 150 165 135Z"/>
+    </g>
+    <g class="cat-face">
+      <ellipse cx="95" cy="115" rx="22" ry="18" fill="#d9b48a" stroke="#5b3a2a" stroke-width="3"/>
+      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
+        d="M80 105 L75 88 L92 100Z"/>
+      <path d="M90 115 Q95 120 100 115" stroke="#5b3a2a" stroke-width="2" fill="none"/>
+      <path d="M92 125 Q98 128 104 125" stroke="#5b3a2a" stroke-width="2" fill="none"/>
+      <circle cx="85" cy="122" r="3" fill="#f7a6a6" opacity=".7"/>
+    </g>
+  </svg>
+</div>
 
-<div class="panel">
+<audio id="meowAudio">
+  <source src="https://actions.google.com/sounds/v1/animals/cat_meow.ogg" type="audio/ogg">
+</audio>
+<audio id="lofiAudio" loop>
+  <source src="https://files.catbox.moe/1x9j8p.mp3" type="audio/mp3">
+</audio>
 
-    <h2>✨ Cozy Café Dashboard ✨</h2>
+<div class="toast" id="toast"></div>
 
-    <!-- Daily Quote -->
-    <div id="quote-box"></div>
+<!-- -------------------- CONTENT -------------------- -->
+<div class="container">
 
-    <!-- Calendar -->
-    <div class="calendar-box">
-        <div id="date"></div>
-        <div id="time"></div>
-    </div>
+  <div class="card">
+    <h1>Olivia’s Cozy Café ☕🐈</h1>
+    <p>Welcome to your warm digital nook — sip, breathe, and relax.</p>
+    <button id="magic">✨ Magic Mood Button</button>
+  </div>
 
-    <!-- To‑do List -->
+  <div class="card" id="calendar">
+    <h3>Today</h3>
+    <div id="date"></div>
+    <div id="time"></div>
+  </div>
+
+  <div class="card" id="quote">
+    <h3>Daily Cozy Quote</h3>
+    <p id="quoteText"></p>
+  </div>
+
+  <div class="card links">
+    <h3>Café Links</h3>
+    <a href="https://www.google.com" target="_blank">🔍 Google</a>
+    <a href="https://music.youtube.com" target="_blank">🎧 YouTube Music</a>
+    <a href="https://www.pinterest.com" target="_blank">📌 Pinterest</a>
+    <a href="https://mail.google.com" target="_blank">✉️ Gmail</a>
+  </div>
+
+  <div class="card">
     <h3>To‑Do List</h3>
-    <div id="todo-list"></div>
-    <button onclick="addTodo()">Add Item</button>
+    <div id="todoList"></div>
+    <button id="addTask">➕ Add Task</button>
+  </div>
 
-    <!-- Mood Tracker -->
-    <h3>Mood Tracker ☕</h3>
-    <div class="mood-box">
-        <label>Coffee Level Today:</label><br>
-        <input type="range" id="coffee" min="0" max="5">
-        <textarea id="mood-notes" placeholder="How are you feeling today?" style="width:100%;height:60px;margin-top:5px;"></textarea>
-        <button onclick="saveMood()">Save Mood</button>
+  <div class="card">
+    <h3>☕ Mood Notebook</h3>
+    <div class="mood-wrapper">
+      <div class="mood-today">
+        <strong>Today’s Coffee Mood</strong>
+        <div class="mood-row">
+          <label for="moodLevel">Mood level:</label>
+          <select id="moodLevel">
+            <option value="0">0 ☕ (empty cup)</option>
+            <option value="1">1 ☕</option>
+            <option value="2">2 ☕☕</option>
+            <option value="3">3 ☕☕☕</option>
+            <option value="4">4 ☕☕☕☕</option>
+            <option value="5">5 ☕☕☕☕☕</option>
+          </select>
+          <span class="cups" id="moodCups">☕</span>
+        </div>
+        <textarea id="moodNote" placeholder="Little note about how you’re feeling today..."></textarea>
+        <button id="saveMood">Save today’s mood</button>
+      </div>
+
+      <div class="mood-calendar">
+        <h4>Coffee Mood Calendar</h4>
+        <div id="calendarMonth"></div>
+        <div class="calendar-grid" id="moodCalendarGrid"></div>
+      </div>
     </div>
-
-    <!-- Magic Button -->
-    <button class="magic-btn" onclick="doMagic()">Magic ✨</button>
-
-    <!-- Links -->
-    <div class="links">
-        <a href="https://google.com" target="_blank">Google</a>
-        <a href="https://music.youtube.com" target="_blank">YouTube Music</a>
-        <a href="https://pinterest.com" target="_blank">Pinterest</a>
-        <a href="https://mail.google.com" target="_blank">Gmail</a>
-    </div>
-
-    <!-- Lo-fi Music -->
-    <audio id="lofi" controls style="margin-top:10px; width:100%;">
-        <source src="https://files.catbox.moe/1x9j8p.mp3" type="audio/mp3">
-    </audio>
+  </div>
 
 </div>
 
 <script>
-/* Daily Quotes */
-const quotes = [
-    "Take a deep breath — you're doing great.",
-    "Small steps still move you forward.",
-    "You deserve soft moments and warm coffee.",
-    "Be gentle with yourself today.",
-    "You are growing, even when it feels slow."
-];
-document.getElementById("quote-box").innerText =
-    quotes[new Date().getDate() % quotes.length];
-
-/* Calendar */
-function updateClock() {
-    const now = new Date();
-    document.getElementById("date").innerText = now.toLocaleDateString();
-    document.getElementById("time").innerText = now.toLocaleTimeString();
-}
-setInterval(updateClock, 1000);
-updateClock();
-
-/* To‑Do List */
-let todos = JSON.parse(localStorage.getItem("todos") || "[]");
-function renderTodos() {
-    const list = document.getElementById("todo-list");
-    list.innerHTML = "";
-    todos.forEach((t, i) => {
-        list.innerHTML += `
-            <div class="todo-item">
-                <input type="checkbox" ${t.done ? "checked" : ""} onclick="toggleTodo(${i})">
-                <input type="text" value="${t.text}" oninput="editTodo(${i}, this.value)">
-            </div>`;
-    });
-}
-function addTodo() {
-    todos.push({ text: "New task", done: false });
-    saveTodos();
-}
-function toggleTodo(i) {
-    todos[i].done = !todos[i].done;
-    saveTodos();
-}
-function editTodo(i, text) {
-    todos[i].text = text;
-    saveTodos();
-}
-function saveTodos() {
-    localStorage.setItem("todos", JSON.stringify(todos));
-    renderTodos();
-}
-renderTodos();
-
-/* Mood Tracker */
-function saveMood() {
-    const mood = {
-        coffee: document.getElementById("coffee").value,
-        notes: document.getElementById("mood-notes").value
-    };
-    localStorage.setItem("mood", JSON.stringify(mood));
-}
-function loadMood() {
-    const mood = JSON.parse(localStorage.getItem("mood") || "{}");
-    if (mood.coffee) document.getElementById("coffee").value = mood.coffee;
-    if (mood.notes) document.getElementById("mood-notes").value = mood.notes;
-}
-loadMood();
-
-/* Magic Button */
-function doMagic() {
-    alert("✨ A little magic for your day ✨");
+/* -------------------- LEAVES -------------------- */
+for(let i=0;i<10;i++){
+  const l=document.createElement("div");
+  l.className="leaf";
+  l.style.left=Math.random()*100+"vw";
+  l.style.animationDuration=10+Math.random()*8+"s";
+  l.style.animationDelay=Math.random()*6+"s";
+  document.body.appendChild(l);
 }
 
-/* Pet the cats */
-document.getElementById("cat-left").onclick = () => {
-    let c = document.getElementById("cat-left");
-    c.classList.add("petting");
-    setTimeout(() => c.classList.remove("petting"), 400);
-};
-document.getElementById("cat-right").onclick = () => {
-    let c = document.getElementById("cat-right");
-    c.classList.add("petting");
-    setTimeout(() => c.classList.remove("petting"), 400);
-};
-</script>
+/* -------------------- SPARKLES -------------------- */
+for(let i=0;i<18;i++){
+  const s=document.createElement("div");
+  s.className="sparkle";
+  s.style.left=Math.random()*100+"vw";
+  s.style.animationDelay=Math.random()*6+"s";
+  s.style.animationDuration=5+Math.random()*6+"s";
+  document.body.appendChild(s);
+}
 
-</body>
-</html>
+/* -------------------- DATE + TIME -------------------- */
+function updateTime(){
+  const n=new Date();
+  document.getElementById("date").textContent =
+    n.toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+  document.getElementById("time").textContent =
+    n.toLocaleTimeString();
+}
+setInterval(updateTime,1000);
+updateTime();
+
+/* -------------------- QUOTES -------------------- */
+const quotes=[
+  "Take a deep breath — you’re doing beautifully.",
+  "Small steps still move you forward.",
+  "You deserve soft moments and warm light.",
+  "Rest is productive too.",
+  "You are allowed to
