@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Cozy Café</title>
+<title>Olivia’s Cozy Café</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
+/* -------------------- COLORS -------------------- */
 :root {
   --accent:#f4b27a;
   --soft:#f8d4a8;
@@ -22,71 +24,188 @@ body {
   background:#1a0f0a;
   overflow-x:hidden;
 }
+
+/* -------------------- BACKGROUND -------------------- */
 .background {
-  position:fixed;inset:0;
-  background:url("https://img.magnific.com/premium-photo/serene-sunset-scene-featuring-sleeping-cat-balcony-surrounded-by-plants-books_1383414-2910.jpg?semt=ais_hybrid&w=740&q=80") center/cover no-repeat;
+  position:fixed; inset:0;
+  background:url("https://img.magnific.com/premium-photo/serene-sunset-scene-featuring-sleeping-cat-balcony-surrounded-by-plants-books_1383414-2910.jpg?semt=ais_hybrid&w=740&q=80")
+    center/cover no-repeat;
   filter:blur(2px) brightness(0.7);
   z-index:-2;
 }
 .overlay {
-  position:fixed;inset:0;
-  background:radial-gradient(circle at top,rgba(255,210,150,.35),transparent 55%),linear-gradient(to bottom,rgba(15,8,5,.7),rgba(10,5,3,.95));
+  position:fixed; inset:0;
+  background:radial-gradient(circle at top,rgba(255,210,150,.35),transparent 55%),
+             linear-gradient(to bottom,rgba(15,8,5,.7),rgba(10,5,3,.95));
   z-index:-1;
 }
-body.night .background{filter:blur(2px) brightness(0.4);}
-body.night .overlay{background:radial-gradient(circle at top,rgba(120,160,255,.25),transparent 55%),linear-gradient(to bottom,rgba(5,8,20,.9),rgba(3,5,12,.98));}
+body.night .background { filter:blur(2px) brightness(0.4); }
+body.night .overlay {
+  background:radial-gradient(circle at top,rgba(120,160,255,.25),transparent 55%),
+             linear-gradient(to bottom,rgba(5,8,20,.9),rgba(3,5,12,.98));
+}
 
-/* Falling leaves */
-.leaf{position:fixed;width:10px;height:16px;background:rgba(255,186,120,.8);border-radius:50%;opacity:.7;animation:fall linear infinite;}
-@keyframes fall{0%{transform:translateY(-10vh) rotate(0);}100%{transform:translateY(110vh) rotate(120deg);}}
-/* Sparkles */
-.sparkle{position:fixed;width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:spark 6s linear infinite;}
-@keyframes spark{0%{transform:translateY(100vh) scale(.4);opacity:0;}20%{opacity:1;}100%{transform:translateY(-10vh) scale(1);opacity:0;}}
+/* -------------------- LEAVES -------------------- */
+.leaf {
+  position:fixed;
+  width:8px; height:12px;
+  background:rgba(255,186,120,.8);
+  border-radius:50%;
+  opacity:.7;
+  animation:fall linear infinite;
+}
+@keyframes fall {
+  0% { transform:translateY(-10vh) rotate(0); }
+  100% { transform:translateY(110vh) rotate(120deg); }
+}
 
-/* Layout */
-.container{max-width:900px;margin:0 auto;padding:40px 20px;}
-.card{background:rgba(35,22,18,.9);border-radius:18px;padding:20px;margin-bottom:20px;box-shadow:0 18px 40px rgba(0,0,0,.55);}
-h1{font-size:1.8rem;margin:0 0 10px;}
-button{background:linear-gradient(135deg,#f7c08a,#f39b7a);border:none;border-radius:999px;padding:8px 16px;font-weight:600;color:#3b1f12;cursor:pointer;}
-button:hover{filter:brightness(1.1);}
+/* -------------------- SPARKLES -------------------- */
+.sparkle {
+  position:fixed;
+  width:4px; height:4px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 8px #fff;
+  animation:spark 6s linear infinite;
+}
+@keyframes spark {
+  0% { transform:translateY(100vh) scale(.4); opacity:0; }
+  20% { opacity:1; }
+  100% { transform:translateY(-10vh) scale(1); opacity:0; }
+}
 
-/* Corner cats */
-.cat{position:fixed;width:90px;height:90px;z-index:5;cursor:pointer;}
-.cat svg{width:100%;height:100%;}
-.cat.left{bottom:10px;left:10px;}
-.cat.right{bottom:10px;right:10px;}
-.cat:hover{transform:scale(1.05);}
-.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:rgba(25,15,10,.96);border-radius:999px;padding:8px 16px;font-size:.85rem;border:1px solid rgba(255,255,255,.18);opacity:0;transition:.25s;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px);}
+/* -------------------- LAYOUT -------------------- */
+.container {
+  max-width:900px;
+  margin:0 auto;
+  padding:40px 20px;
+}
+.card {
+  background:rgba(35,22,18,.9);
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:0 18px 40px rgba(0,0,0,.55);
+}
+h1 { font-size:1.8rem; margin:0 0 10px; }
+button {
+  background:linear-gradient(135deg,#f7c08a,#f39b7a);
+  border:none;
+  border-radius:999px;
+  padding:8px 16px;
+  font-weight:600;
+  color:#3b1f12;
+  cursor:pointer;
+}
+button:hover { filter:brightness(1.1); }
 
-/* Links */
-.links a{display:inline-block;margin:4px;padding:6px 12px;border-radius:999px;background:rgba(30,18,12,.9);color:#ffd59b;text-decoration:none;font-size:.85rem;}
-.links a:hover{background:rgba(50,30,20,.95);color:#ffe9c7;}
+/* -------------------- CORNER CATS -------------------- */
+.cat {
+  position:fixed;
+  width:90px; height:90px;
+  z-index:5;
+  cursor:pointer;
+}
+.cat svg { width:100%; height:100%; }
+.cat.left { bottom:10px; left:10px; }
+.cat.right { bottom:10px; right:10px; }
+.cat:hover { transform:scale(1.05); }
+
+.toast {
+  position:fixed;
+  left:50%; bottom:80px;
+  transform:translateX(-50%);
+  background:rgba(25,15,10,.96);
+  border-radius:999px;
+  padding:8px 16px;
+  font-size:.85rem;
+  border:1px solid rgba(255,255,255,.18);
+  opacity:0;
+  transition:.25s;
+}
+.toast.show {
+  opacity:1;
+  transform:translateX(-50%) translateY(-4px);
+}
+
+/* -------------------- LINKS -------------------- */
+.links a {
+  display:inline-block;
+  margin:4px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(30,18,12,.9);
+  color:#ffd59b;
+  text-decoration:none;
+  font-size:.85rem;
+}
+.links a:hover {
+  background:rgba(50,30,20,.95);
+  color:#ffe9c7;
+}
+
+/* -------------------- TO‑DO LIST -------------------- */
+.todo-item {
+  display:flex;
+  align-items:center;
+  margin:6px 0;
+}
+.todo-item input[type="checkbox"] {
+  width:18px; height:18px;
+  margin-right:10px;
+  accent-color:#f4b27a;
+}
+.todo-item input[type="text"] {
+  flex:1;
+  background:transparent;
+  border:none;
+  border-bottom:1px dashed rgba(255,255,255,.2);
+  color:var(--text);
+  font-size:1rem;
+}
+.todo-item input[type="text"]:focus {
+  outline:none;
+  border-bottom:1px solid var(--accent);
+}
+.delete-btn {
+  margin-left:10px;
+  cursor:pointer;
+  color:#ffb3b3;
+  font-size:1.2rem;
+}
 </style>
 </head>
-<body>
-<div class="background"></div><div class="overlay"></div>
 
-<!-- Cats -->
+<body>
+<div class="background"></div>
+<div class="overlay"></div>
+
+<!-- -------------------- CATS -------------------- -->
 <div class="cat left" data-side="left">
 <svg viewBox="0 0 200 200">
-<path fill="#fff3e0" stroke="#5b3a2a" stroke-width="4" d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
+<path fill="#fff3e0" stroke="#5b3a2a" stroke-width="4"
+d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
 <ellipse cx="75" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
 <ellipse cx="125" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
 <path d="M95 110 Q100 120 105 110" stroke="#5b3a2a" stroke-width="3" fill="none"/>
 </svg>
 </div>
+
 <div class="cat right" data-side="right">
 <svg viewBox="0 0 200 200">
-<path fill="#fff3e0" stroke="#5b3a2a" stroke-width="4" d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
+<path fill="#fff3e0" stroke="#5b3a2a" stroke-width="4"
+d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
 <ellipse cx="75" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
 <ellipse cx="125" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
 <path d="M95 110 Q100 120 105 110" stroke="#5b3a2a" stroke-width="3" fill="none"/>
 </svg>
 </div>
+
 <div class="toast" id="toast"></div>
 
+<!-- -------------------- CONTENT -------------------- -->
 <div class="container">
+
   <div class="card">
     <h1>Olivia’s Cozy Café ☕🐈</h1>
     <p>Welcome to your warm digital nook — sip, breathe, and relax.</p>
@@ -102,22 +221,138 @@ button:hover{filter:brightness(1.1);}
   <div class="card" id="quote">
     <h3>Daily Cozy Quote</h3>
     <p id="quoteText"></p>
-    <small id="quoteNote"></small>
   </div>
 
   <div class="card links">
     <h3>Café Links</h3>
     <a href="https://www.google.com" target="_blank">🔍 Google</a>
-    <a href="https://music.youtube.com" target="_blank">🎧 YouTube Music</a>
+    <a href="https://music.youtube.com" target="_blank">🎧 YouTube Music</a>
     <a href="https://www.pinterest.com" target="_blank">📌 Pinterest</a>
     <a href="https://mail.google.com" target="_blank">✉️ Gmail</a>
   </div>
+
+  <div class="card">
+    <h3>To‑Do List</h3>
+    <div id="todoList"></div>
+    <button id="addTask">➕ Add Task</button>
+  </div>
+
 </div>
 
 <script>
-// Leaves
-for(let i=0;i<15;i++){const l=document.createElement("div");l.className="leaf";l.style.left=Math.random()*100+"vw";l.style.animationDuration=8+Math.random()*6+"s";l.style.animationDelay=Math.random()*5+"s";document.body.appendChild(l);}
-// Sparkles
-for(let i=0;i<25;i++){const s=document.createElement("div");s.className="sparkle";s.style.left=Math.random()*100+"vw";s.style.animationDelay=Math.random()*6+"s";s.style.animationDuration=5+Math.random()*6+"s";document.body.appendChild(s);}
-// Calendar
-function updateTime(){const n=new Date();document.getElementById("date").textContent=n.toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});document.getElementById("time").textContent=n
+/* -------------------- LEAVES -------------------- */
+for(let i=0;i<15;i++){
+  const l=document.createElement("div");
+  l.className="leaf";
+  l.style.left=Math.random()*100+"vw";
+  l.style.animationDuration=8+Math.random()*6+"s";
+  l.style.animationDelay=Math.random()*5+"s";
+  document.body.appendChild(l);
+}
+
+/* -------------------- SPARKLES -------------------- */
+for(let i=0;i<25;i++){
+  const s=document.createElement("div");
+  s.className="sparkle";
+  s.style.left=Math.random()*100+"vw";
+  s.style.animationDelay=Math.random()*6+"s";
+  s.style.animationDuration=5+Math.random()*6+"s";
+  document.body.appendChild(s);
+}
+
+/* -------------------- DATE + TIME -------------------- */
+function updateTime(){
+  const n=new Date();
+  document.getElementById("date").textContent =
+    n.toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+  document.getElementById("time").textContent =
+    n.toLocaleTimeString();
+}
+setInterval(updateTime,1000);
+updateTime();
+
+/* -------------------- QUOTES -------------------- */
+const quotes=[
+  "Take a deep breath — you’re doing beautifully.",
+  "Small steps still move you forward.",
+  "You deserve soft moments and warm light.",
+  "Rest is productive too.",
+  "You are allowed to take up space.",
+  "Your story is still unfolding — gently."
+];
+document.getElementById("quoteText").textContent =
+  quotes[new Date().getDate() % quotes.length];
+
+/* -------------------- MAGIC BUTTON -------------------- */
+document.getElementById("magic").onclick=()=>{
+  document.body.classList.toggle("night");
+};
+
+/* -------------------- CAT INTERACTION -------------------- */
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),1500);
+}
+document.querySelectorAll(".cat").forEach(cat=>{
+  cat.onclick=()=>showToast("The cat purrs softly...");
+});
+
+/* -------------------- TO‑DO LIST -------------------- */
+let tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+
+function saveTasks(){
+  localStorage.setItem("tasks",JSON.stringify(tasks));
+}
+
+function renderTasks(){
+  const list=document.getElementById("todoList");
+  list.innerHTML="";
+  tasks.forEach((task,i)=>{
+    const row=document.createElement("div");
+    row.className="todo-item";
+
+    const box=document.createElement("input");
+    box.type="checkbox";
+    box.checked=task.done;
+    box.onchange=()=>{
+      tasks[i].done=box.checked;
+      saveTasks();
+    };
+
+    const text=document.createElement("input");
+    text.type="text";
+    text.value=task.text;
+    text.oninput=()=>{
+      tasks[i].text=text.value;
+      saveTasks();
+    };
+
+    const del=document.createElement("span");
+    del.className="delete-btn";
+    del.innerHTML="✖";
+    del.onclick=()=>{
+      tasks.splice(i,1);
+      saveTasks();
+      renderTasks();
+    };
+
+    row.appendChild(box);
+    row.appendChild(text);
+    row.appendChild(del);
+    list.appendChild(row);
+  });
+}
+
+document.getElementById("addTask").onclick=()=>{
+  tasks.push({text:"New task",done:false});
+  saveTasks();
+  renderTasks();
+};
+
+renderTasks();
+</script>
+
+</body>
+</html>
