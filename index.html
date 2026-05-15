@@ -3,220 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <title>Olivia’s Cozy Café</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-/* ---------------- GLOBAL PAGE STYLE ---------------- */
+:root {
+  --accent:#f4b27a;
+  --soft:#f8d4a8;
+  --cream:#fff3e0;
+  --outline:#5b3a2a;
+  --blush:#f7a6a6;
+  --bg:#1a0f0a;
+  --text:#fdf5e9;
+  --muted:#e3d2c0;
+}
 body {
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: url('https://img.magnific.com/premium-photo/serene-sunset-scene-featuring-sleeping-cat-balcony-surrounded-by-plants-books_1383414-2910.jpg?semt=ais_hybrid&w=740&q=80') center/cover no-repeat fixed;
-  animation: warmGlow 10s ease-in-out infinite alternate;
-  overflow-x: hidden;
+  margin:0;
+  font-family:"Segoe UI",sans-serif;
+  color:var(--text);
+  background:#1a0f0a;
+  overflow-x:hidden;
 }
+.background {
+  position:fixed;inset:0;
+  background:url("https://img.magnific.com/premium-photo/serene-sunset-scene-featuring-sleeping-cat-balcony-surrounded-by-plants-books_1383414-2910.jpg?semt=ais_hybrid&w=740&q=80") center/cover no-repeat;
+  filter:blur(2px) brightness(0.7);
+  z-index:-2;
+}
+.overlay {
+  position:fixed;inset:0;
+  background:radial-gradient(circle at top,rgba(255,210,150,.35),transparent 55%),linear-gradient(to bottom,rgba(15,8,5,.7),rgba(10,5,3,.95));
+  z-index:-1;
+}
+body.night .background{filter:blur(2px) brightness(0.4);}
+body.night .overlay{background:radial-gradient(circle at top,rgba(120,160,255,.25),transparent 55%),linear-gradient(to bottom,rgba(5,8,20,.9),rgba(3,5,12,.98));}
 
-/* Warm ambient glow */
-@keyframes warmGlow {
-  0% { filter: brightness(1) saturate(1); }
-  100% { filter: brightness(1.15) saturate(1.2); }
-}
+/* Falling leaves */
+.leaf{position:fixed;width:10px;height:16px;background:rgba(255,186,120,.8);border-radius:50%;opacity:.7;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(-10vh) rotate(0);}100%{transform:translateY(110vh) rotate(120deg);}}
+/* Sparkles */
+.sparkle{position:fixed;width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:spark 6s linear infinite;}
+@keyframes spark{0%{transform:translateY(100vh) scale(.4);opacity:0;}20%{opacity:1;}100%{transform:translateY(-10vh) scale(1);opacity:0;}}
 
-/* ---------------- FALLING LEAVES ---------------- */
-.leaf {
-  position: fixed;
-  top: -10vh;
-  width: 25px;
-  height: 25px;
-  background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><path fill="%23d49a6a" d="M20 0 C5 10 0 25 10 35 C25 40 35 25 30 10 Z"/></svg>');
-  background-size: cover;
-  opacity: 0.8;
-  animation: fall linear infinite;
-  pointer-events: none;
-}
+/* Layout */
+.container{max-width:900px;margin:0 auto;padding:40px 20px;}
+.card{background:rgba(35,22,18,.9);border-radius:18px;padding:20px;margin-bottom:20px;box-shadow:0 18px 40px rgba(0,0,0,.55);}
+h1{font-size:1.8rem;margin:0 0 10px;}
+button{background:linear-gradient(135deg,#f7c08a,#f39b7a);border:none;border-radius:999px;padding:8px 16px;font-weight:600;color:#3b1f12;cursor:pointer;}
+button:hover{filter:brightness(1.1);}
 
-@keyframes fall {
-  0% { transform: translateY(-10vh) rotate(0deg); }
-  100% { transform: translateY(110vh) rotate(360deg); }
-}
+/* Corner cats */
+.cat{position:fixed;width:90px;height:90px;z-index:5;cursor:pointer;}
+.cat svg{width:100%;height:100%;}
+.cat.left{bottom:10px;left:10px;}
+.cat.right{bottom:10px;right:10px;}
+.cat:hover{transform:scale(1.05);}
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:rgba(25,15,10,.96);border-radius:999px;padding:8px 16px;font-size:.85rem;border:1px solid rgba(255,255,255,.18);opacity:0;transition:.25s;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px);}
 
-/* ---------------- CORNER CATS ---------------- */
-.cat {
-  position: fixed;
-  width: 120px;
-  cursor: pointer;
-  z-index: 9999;
-  transition: transform 0.2s ease;
-}
-
-.cat:hover {
-  transform: scale(1.1);
-}
-
-/* Anime cat SVG */
-.cat svg {
-  width: 100%;
-  height: auto;
-}
-
-/* Positions */
-#catLeft { bottom: 20px; left: 20px; }
-#catRight { bottom: 20px; right: 20px; }
-
-/* ---------------- MAGIC BUTTON ---------------- */
-#magicButton {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: #ffddb3;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 0 10px #0003;
-  transition: 0.3s;
-}
-
-#magicButton:hover {
-  background: #ffe8c9;
-}
-
-/* Glow mode */
-.glow {
-  filter: brightness(1.25) saturate(1.3);
-}
-
-/* ---------------- CHECKLIST ---------------- */
-#checklist {
-  position: fixed;
-  top: 100px;
-  left: 20px;
-  background: #ffffffcc;
-  padding: 15px;
-  border-radius: 10px;
-  width: 220px;
-  backdrop-filter: blur(5px);
-}
-
-/* ---------------- QUOTES ---------------- */
-#quoteBox {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  font-size: 20px;
-  background: #ffffffcc;
-  padding: 10px 15px;
-  border-radius: 10px;
-  width: 350px;
-  backdrop-filter: blur(5px);
-}
-
-/* ---------------- LINKS ---------------- */
-a {
-  color: #8b4f2f;
-  font-weight: bold;
-}
-a:hover {
-  text-decoration: underline;
-}
+/* Links */
+.links a{display:inline-block;margin:4px;padding:6px 12px;border-radius:999px;background:rgba(30,18,12,.9);color:#ffd59b;text-decoration:none;font-size:.85rem;}
+.links a:hover{background:rgba(50,30,20,.95);color:#ffe9c7;}
 </style>
 </head>
 <body>
+<div class="background"></div><div class="overlay"></div>
 
-<!-- ---------------- QUOTE BOX ---------------- -->
-<div id="quoteBox">“A cozy day begins with a warm heart.”</div>
-
-<!-- ---------------- CHECKLIST ---------------- -->
-<div id="checklist">
-  <h3>To‑Do</h3>
-  <label><input type="checkbox" class="task"> Make coffee</label><br>
-  <label><input type="checkbox" class="task"> Pet the cats</label><br>
-  <label><input type="checkbox" class="task"> Relax & breathe</label><br>
+<!-- Cats -->
+<div class="cat left" data-side="left">
+<svg viewBox="0 0 200 200">
+<path fill="#fff3e0" stroke="#5b3a2a" stroke-width="4" d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
+<ellipse cx="75" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
+<ellipse cx="125" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
+<path d="M95 110 Q100 120 105 110" stroke="#5b3a2a" stroke-width="3" fill="none"/>
+</svg>
 </div>
-
-<!-- ---------------- MAGIC BUTTON ---------------- -->
-<button id="magicButton">Magic Café Glow ✨</button>
-
-<!-- ---------------- ANIME CORNER CATS ---------------- -->
-<div id="catLeft" class="cat">
-  <!-- Cute drawn anime cat SVG -->
-  <svg viewBox="0 0 200 200">
-    <path fill="#fff" stroke="#000" stroke-width="4"
-      d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
-    <circle cx="75" cy="90" r="10" fill="#000"/>
-    <circle cx="125" cy="90" r="10" fill="#000"/>
-    <path d="M95 110 Q100 120 105 110" stroke="#000" stroke-width="4" fill="none"/>
-  </svg>
+<div class="cat right" data-side="right">
+<svg viewBox="0 0 200 200">
+<path fill="#fff3e0" stroke="#5b3a2a" stroke-width="4" d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
+<ellipse cx="75" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
+<ellipse cx="125" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
+<path d="M95 110 Q100 120 105 110" stroke="#5b3a2a" stroke-width="3" fill="none"/>
+</svg>
 </div>
+<div class="toast" id="toast"></div>
 
-<div id="catRight" class="cat">
-  <svg viewBox="0 0 200 200">
-    <path fill="#fff" stroke="#000" stroke-width="4"
-      d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
-    <circle cx="75" cy="90" r="10" fill="#000"/>
-    <circle cx="125" cy="90" r="10" fill="#000"/>
-    <path d="M95 110 Q100 120 105 110" stroke="#000" stroke-width="4" fill="none"/>
-  </svg>
+<div class="container">
+  <div class="card">
+    <h1>Olivia’s Cozy Café ☕🐈</h1>
+    <p>Welcome to your warm digital nook — sip, breathe, and relax.</p>
+    <button id="magic">✨ Magic Mood Button</button>
+  </div>
+
+  <div class="card" id="calendar">
+    <h3>Today</h3>
+    <div id="date"></div>
+    <div id="time"></div>
+  </div>
+
+  <div class="card" id="quote">
+    <h3>Daily Cozy Quote</h3>
+    <p id="quoteText"></p>
+    <small id="quoteNote"></small>
+  </div>
+
+  <div class="card links">
+    <h3>Café Links</h3>
+    <a href="https://www.google.com" target="_blank">🔍 Google</a>
+    <a href="https://music.youtube.com" target="_blank">🎧 YouTube Music</a>
+    <a href="https://www.pinterest.com" target="_blank">📌 Pinterest</a>
+    <a href="https://mail.google.com" target="_blank">✉️ Gmail</a>
+  </div>
 </div>
-
-<!-- ---------------- AUDIO ---------------- -->
-<audio id="meowSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c8e90b9d1.mp3?filename=cat-meow-14536.mp3"></audio>
-<audio id="purrSound" src="https://cdn.pixabay.com/download/audio/2021/09/06/audio_4f3e3e0f52.mp3?filename=cat-purr-1-110120.mp3"></audio>
 
 <script>
-/* ---------------- FALLING LEAVES GENERATOR ---------------- */
-for (let i = 0; i < 12; i++) {
-  let leaf = document.createElement("div");
-  leaf.className = "leaf";
-  leaf.style.left = Math.random() * 100 + "vw";
-  leaf.style.animationDuration = 6 + Math.random() * 6 + "s";
-  leaf.style.animationDelay = Math.random() * 5 + "s";
-  document.body.appendChild(leaf);
-}
-
-/* ---------------- CAT INTERACTIONS ---------------- */
-const cats = document.querySelectorAll(".cat");
-const meow = document.getElementById("meowSound");
-const purr = document.getElementById("purrSound");
-
-cats.forEach(cat => {
-  cat.addEventListener("click", () => {
-    meow.currentTime = 0;
-    meow.play();
-  });
-  cat.addEventListener("mouseenter", () => {
-    purr.currentTime = 0;
-    purr.play();
-  });
-});
-
-/* ---------------- MAGIC BUTTON ---------------- */
-document.getElementById("magicButton").addEventListener("click", () => {
-  document.body.classList.toggle("glow");
-});
-
-/* ---------------- CHECKLIST SAVE ---------------- */
-const tasks = document.querySelectorAll(".task");
-
-tasks.forEach((task, i) => {
-  task.checked = localStorage.getItem("task" + i) === "true";
-  task.addEventListener("change", () => {
-    localStorage.setItem("task" + i, task.checked);
-  });
-});
-
-/* ---------------- QUOTES ---------------- */
-const quotes = [
-  "“A cozy day begins with a warm heart.”",
-  "“Happiness is a cup of coffee and a good book.”",
-  "“Let the cats nap and the leaves fall.”",
-  "“Peace is brewed slowly, like coffee.”"
-];
-
-setInterval(() => {
-  document.getElementById("quoteBox").textContent =
-    quotes[Math.floor(Math.random() * quotes.length)];
-}, 10000);
-</script>
-
-</body>
-</html>
+// Leaves
+for(let i=0;i<15;i++){const l=document.createElement("div");l.className="leaf";l.style.left=Math.random()*100+"vw";l.style.animationDuration=8+Math.random()*6+"s";l.style.animationDelay=Math.random()*5+"s";document.body.appendChild(l);}
+// Sparkles
+for(let i=0;i<25;i++){const s=document.createElement("div");s.className="sparkle";s.style.left=Math.random()*100+"vw";s.style.animationDelay=Math.random()*6+"s";s.style.animationDuration=5+Math.random()*6+"s";document.body.appendChild(s);}
+// Calendar
+function updateTime(){const n=new Date();document.getElementById("date").textContent=n.toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});document.getElementById("time").textContent=n
