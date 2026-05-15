@@ -2,356 +2,291 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Olivia’s Cozy Café</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Cozy Café Home</title>
 <style>
-/* -------------------- COLORS -------------------- */
-:root {
-  --accent:#f4b27a;
-  --soft:#f8d4a8;
-  --cream:#fff3e0;
-  --outline:#5b3a2a;
-  --blush:#f7a6a6;
-  --bg:#1a0f0a;
-  --text:#fdf5e9;
-  --muted:#e3d2c0;
-}
-body {
-  margin:0;
-  font-family:"Segoe UI",sans-serif;
-  color:var(--text);
-  background:#1a0f0a;
-  overflow-x:hidden;
-}
+    body {
+        margin: 0;
+        padding: 0;
+        background: url("https://img.magnific.com/premium-photo/serene-sunset-scene-featuring-sleeping-cat-balcony-surrounded-by-plants-books_1383414-2910.jpg?semt=ais_hybrid&w=740&q=80") no-repeat center center fixed;
+        background-size: cover;
+        font-family: "Segoe UI", sans-serif;
+        color: #fff;
+        overflow-x: hidden;
+    }
 
-/* -------------------- BACKGROUND -------------------- */
-.background {
-  position:fixed; inset:0;
-  background:url("https://img.magnific.com/premium-photo/serene-sunset-scene-featuring-sleeping-cat-balcony-surrounded-by-plants-books_1383414-2910.jpg?semt=ais_hybrid&w=740&q=80")
-    center/cover no-repeat;
-  filter:blur(2px) brightness(0.7);
-  z-index:-2;
-}
-.overlay {
-  position:fixed; inset:0;
-  background:radial-gradient(circle at top,rgba(255,210,150,.35),transparent 55%),
-             linear-gradient(to bottom,rgba(15,8,5,.7),rgba(10,5,3,.95));
-  z-index:-1;
-}
-body.night .background { filter:blur(2px) brightness(0.4); }
-body.night .overlay {
-  background:radial-gradient(circle at top,rgba(120,160,255,.25),transparent 55%),
-             linear-gradient(to bottom,rgba(5,8,20,.9),rgba(3,5,12,.98));
-}
+    /* Soft overlay for warmth */
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.35);
+        backdrop-filter: blur(2px);
+        z-index: -1;
+    }
 
-/* -------------------- LEAVES -------------------- */
-.leaf {
-  position:fixed;
-  width:8px; height:12px;
-  background:rgba(255,186,120,.8);
-  border-radius:50%;
-  opacity:.7;
-  animation:fall linear infinite;
-}
-@keyframes fall {
-  0% { transform:translateY(-10vh) rotate(0); }
-  100% { transform:translateY(110vh) rotate(120deg); }
-}
+    /* Corner anime cats */
+    .corner-cat {
+        position: fixed;
+        width: 120px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        z-index: 10;
+    }
+    .corner-cat:hover {
+        transform: scale(1.1);
+    }
 
-/* -------------------- SPARKLES -------------------- */
-.sparkle {
-  position:fixed;
-  width:4px; height:4px;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:0 0 8px #fff;
-  animation:spark 6s linear infinite;
-}
-@keyframes spark {
-  0% { transform:translateY(100vh) scale(.4); opacity:0; }
-  20% { opacity:1; }
-  100% { transform:translateY(-10vh) scale(1); opacity:0; }
-}
+    #cat-left { bottom: 10px; left: 10px; }
+    #cat-right { bottom: 10px; right: 10px; }
 
-/* -------------------- LAYOUT -------------------- */
-.container {
-  max-width:900px;
-  margin:0 auto;
-  padding:40px 20px;
-}
-.card {
-  background:rgba(35,22,18,.9);
-  border-radius:18px;
-  padding:20px;
-  margin-bottom:20px;
-  box-shadow:0 18px 40px rgba(0,0,0,.55);
-}
-h1 { font-size:1.8rem; margin:0 0 10px; }
-button {
-  background:linear-gradient(135deg,#f7c08a,#f39b7a);
-  border:none;
-  border-radius:999px;
-  padding:8px 16px;
-  font-weight:600;
-  color:#3b1f12;
-  cursor:pointer;
-}
-button:hover { filter:brightness(1.1); }
+    /* Pet animation */
+    @keyframes pet {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+        100% { transform: scale(1); }
+    }
+    .petting {
+        animation: pet 0.4s ease;
+    }
 
-/* -------------------- CORNER CATS -------------------- */
-.cat {
-  position:fixed;
-  width:90px; height:90px;
-  z-index:5;
-  cursor:pointer;
-}
-.cat svg { width:100%; height:100%; }
-.cat.left { bottom:10px; left:10px; }
-.cat.right { bottom:10px; right:10px; }
-.cat:hover { transform:scale(1.05); }
+    /* Falling leaves */
+    .leaf {
+        position: fixed;
+        top: -20px;
+        width: 18px;
+        opacity: 0.7;
+        animation: fall linear infinite;
+        pointer-events: none;
+    }
+    @keyframes fall {
+        to {
+            transform: translateY(110vh) rotate(360deg);
+        }
+    }
 
-.toast {
-  position:fixed;
-  left:50%; bottom:80px;
-  transform:translateX(-50%);
-  background:rgba(25,15,10,.96);
-  border-radius:999px;
-  padding:8px 16px;
-  font-size:.85rem;
-  border:1px solid rgba(255,255,255,.18);
-  opacity:0;
-  transition:.25s;
-}
-.toast.show {
-  opacity:1;
-  transform:translateX(-50%) translateY(-4px);
-}
+    /* Main container */
+    .panel {
+        width: 420px;
+        background: rgba(0,0,0,0.55);
+        padding: 20px;
+        border-radius: 15px;
+        margin: 40px auto;
+        backdrop-filter: blur(4px);
+    }
 
-/* -------------------- LINKS -------------------- */
-.links a {
-  display:inline-block;
-  margin:4px;
-  padding:6px 12px;
-  border-radius:999px;
-  background:rgba(30,18,12,.9);
-  color:#ffd59b;
-  text-decoration:none;
-  font-size:.85rem;
-}
-.links a:hover {
-  background:rgba(50,30,20,.95);
-  color:#ffe9c7;
-}
+    h2 { margin-top: 0; }
 
-/* -------------------- TO‑DO LIST -------------------- */
-.todo-item {
-  display:flex;
-  align-items:center;
-  margin:6px 0;
-}
-.todo-item input[type="checkbox"] {
-  width:18px; height:18px;
-  margin-right:10px;
-  accent-color:#f4b27a;
-}
-.todo-item input[type="text"] {
-  flex:1;
-  background:transparent;
-  border:none;
-  border-bottom:1px dashed rgba(255,255,255,.2);
-  color:var(--text);
-  font-size:1rem;
-}
-.todo-item input[type="text"]:focus {
-  outline:none;
-  border-bottom:1px solid var(--accent);
-}
-.delete-btn {
-  margin-left:10px;
-  cursor:pointer;
-  color:#ffb3b3;
-  font-size:1.2rem;
-}
+    /* To‑do list */
+    .todo-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .todo-item input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+    }
+    .todo-item input[type="text"] {
+        flex: 1;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        color: #fff;
+        outline: none;
+    }
+
+    /* Mood tracker */
+    .mood-box {
+        background: rgba(255,255,255,0.1);
+        padding: 10px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    /* Magic button */
+    .magic-btn {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: #ffb3d1;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    .magic-btn:hover {
+        background: #ffcce0;
+    }
+
+    /* Links */
+    .links a {
+        display: inline-block;
+        margin-right: 10px;
+        color: #ffe6f2;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    /* Calendar */
+    .calendar-box {
+        margin-top: 10px;
+        padding: 10px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        text-align: center;
+    }
+
 </style>
 </head>
-
 <body>
-<div class="background"></div>
+
 <div class="overlay"></div>
 
-<!-- -------------------- CATS -------------------- -->
-<div class="cat left" data-side="left">
-<svg viewBox="0 0 200 200">
-<path fill="#fff3e0" stroke="#5b3a2a" stroke-width="4"
-d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
-<ellipse cx="75" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
-<ellipse cx="125" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
-<path d="M95 110 Q100 120 105 110" stroke="#5b3a2a" stroke-width="3" fill="none"/>
-</svg>
-</div>
+<!-- Anime corner cats -->
+<img id="cat-left" class="corner-cat" src="https://i.imgur.com/4yKXg7T.png">
+<img id="cat-right" class="corner-cat" src="https://i.imgur.com/2cV7x0H.png">
 
-<div class="cat right" data-side="right">
-<svg viewBox="0 0 200 200">
-<path fill="#fff3e0" stroke="#5b3a2a" stroke-width="4"
-d="M50 60 Q20 20 40 10 Q70 20 80 50 Q100 40 120 50 Q130 20 160 10 Q180 20 150 60 Q170 80 160 120 Q150 160 100 170 Q50 160 40 120 Q30 80 50 60Z"/>
-<ellipse cx="75" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
-<ellipse cx="125" cy="95" rx="8" ry="5" fill="#5b3a2a"/>
-<path d="M95 110 Q100 120 105 110" stroke="#5b3a2a" stroke-width="3" fill="none"/>
-</svg>
-</div>
+<!-- Falling leaves -->
+<script>
+for (let i = 0; i < 12; i++) {
+    let leaf = document.createElement("img");
+    leaf.src = "https://i.imgur.com/1Q9Z1zE.png";
+    leaf.className = "leaf";
+    leaf.style.left = Math.random() * 100 + "vw";
+    leaf.style.animationDuration = 6 + Math.random() * 5 + "s";
+    leaf.style.animationDelay = Math.random() * 5 + "s";
+    document.body.appendChild(leaf);
+}
+</script>
 
-<div class="toast" id="toast"></div>
+<div class="panel">
 
-<!-- -------------------- CONTENT -------------------- -->
-<div class="container">
+    <h2>✨ Cozy Café Dashboard ✨</h2>
 
-  <div class="card">
-    <h1>Olivia’s Cozy Café ☕🐈</h1>
-    <p>Welcome to your warm digital nook — sip, breathe, and relax.</p>
-    <button id="magic">✨ Magic Mood Button</button>
-  </div>
+    <!-- Daily Quote -->
+    <div id="quote-box"></div>
 
-  <div class="card" id="calendar">
-    <h3>Today</h3>
-    <div id="date"></div>
-    <div id="time"></div>
-  </div>
+    <!-- Calendar -->
+    <div class="calendar-box">
+        <div id="date"></div>
+        <div id="time"></div>
+    </div>
 
-  <div class="card" id="quote">
-    <h3>Daily Cozy Quote</h3>
-    <p id="quoteText"></p>
-  </div>
-
-  <div class="card links">
-    <h3>Café Links</h3>
-    <a href="https://www.google.com" target="_blank">🔍 Google</a>
-    <a href="https://music.youtube.com" target="_blank">🎧 YouTube Music</a>
-    <a href="https://www.pinterest.com" target="_blank">📌 Pinterest</a>
-    <a href="https://mail.google.com" target="_blank">✉️ Gmail</a>
-  </div>
-
-  <div class="card">
+    <!-- To‑do List -->
     <h3>To‑Do List</h3>
-    <div id="todoList"></div>
-    <button id="addTask">➕ Add Task</button>
-  </div>
+    <div id="todo-list"></div>
+    <button onclick="addTodo()">Add Item</button>
+
+    <!-- Mood Tracker -->
+    <h3>Mood Tracker ☕</h3>
+    <div class="mood-box">
+        <label>Coffee Level Today:</label><br>
+        <input type="range" id="coffee" min="0" max="5">
+        <textarea id="mood-notes" placeholder="How are you feeling today?" style="width:100%;height:60px;margin-top:5px;"></textarea>
+        <button onclick="saveMood()">Save Mood</button>
+    </div>
+
+    <!-- Magic Button -->
+    <button class="magic-btn" onclick="doMagic()">Magic ✨</button>
+
+    <!-- Links -->
+    <div class="links">
+        <a href="https://google.com" target="_blank">Google</a>
+        <a href="https://music.youtube.com" target="_blank">YouTube Music</a>
+        <a href="https://pinterest.com" target="_blank">Pinterest</a>
+        <a href="https://mail.google.com" target="_blank">Gmail</a>
+    </div>
+
+    <!-- Lo-fi Music -->
+    <audio id="lofi" controls style="margin-top:10px; width:100%;">
+        <source src="https://files.catbox.moe/1x9j8p.mp3" type="audio/mp3">
+    </audio>
 
 </div>
 
 <script>
-/* -------------------- LEAVES -------------------- */
-for(let i=0;i<15;i++){
-  const l=document.createElement("div");
-  l.className="leaf";
-  l.style.left=Math.random()*100+"vw";
-  l.style.animationDuration=8+Math.random()*6+"s";
-  l.style.animationDelay=Math.random()*5+"s";
-  document.body.appendChild(l);
-}
-
-/* -------------------- SPARKLES -------------------- */
-for(let i=0;i<25;i++){
-  const s=document.createElement("div");
-  s.className="sparkle";
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDelay=Math.random()*6+"s";
-  s.style.animationDuration=5+Math.random()*6+"s";
-  document.body.appendChild(s);
-}
-
-/* -------------------- DATE + TIME -------------------- */
-function updateTime(){
-  const n=new Date();
-  document.getElementById("date").textContent =
-    n.toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});
-  document.getElementById("time").textContent =
-    n.toLocaleTimeString();
-}
-setInterval(updateTime,1000);
-updateTime();
-
-/* -------------------- QUOTES -------------------- */
-const quotes=[
-  "Take a deep breath — you’re doing beautifully.",
-  "Small steps still move you forward.",
-  "You deserve soft moments and warm light.",
-  "Rest is productive too.",
-  "You are allowed to take up space.",
-  "Your story is still unfolding — gently."
+/* Daily Quotes */
+const quotes = [
+    "Take a deep breath — you're doing great.",
+    "Small steps still move you forward.",
+    "You deserve soft moments and warm coffee.",
+    "Be gentle with yourself today.",
+    "You are growing, even when it feels slow."
 ];
-document.getElementById("quoteText").textContent =
-  quotes[new Date().getDate() % quotes.length];
+document.getElementById("quote-box").innerText =
+    quotes[new Date().getDate() % quotes.length];
 
-/* -------------------- MAGIC BUTTON -------------------- */
-document.getElementById("magic").onclick=()=>{
-  document.body.classList.toggle("night");
+/* Calendar */
+function updateClock() {
+    const now = new Date();
+    document.getElementById("date").innerText = now.toLocaleDateString();
+    document.getElementById("time").innerText = now.toLocaleTimeString();
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+/* To‑Do List */
+let todos = JSON.parse(localStorage.getItem("todos") || "[]");
+function renderTodos() {
+    const list = document.getElementById("todo-list");
+    list.innerHTML = "";
+    todos.forEach((t, i) => {
+        list.innerHTML += `
+            <div class="todo-item">
+                <input type="checkbox" ${t.done ? "checked" : ""} onclick="toggleTodo(${i})">
+                <input type="text" value="${t.text}" oninput="editTodo(${i}, this.value)">
+            </div>`;
+    });
+}
+function addTodo() {
+    todos.push({ text: "New task", done: false });
+    saveTodos();
+}
+function toggleTodo(i) {
+    todos[i].done = !todos[i].done;
+    saveTodos();
+}
+function editTodo(i, text) {
+    todos[i].text = text;
+    saveTodos();
+}
+function saveTodos() {
+    localStorage.setItem("todos", JSON.stringify(todos));
+    renderTodos();
+}
+renderTodos();
+
+/* Mood Tracker */
+function saveMood() {
+    const mood = {
+        coffee: document.getElementById("coffee").value,
+        notes: document.getElementById("mood-notes").value
+    };
+    localStorage.setItem("mood", JSON.stringify(mood));
+}
+function loadMood() {
+    const mood = JSON.parse(localStorage.getItem("mood") || "{}");
+    if (mood.coffee) document.getElementById("coffee").value = mood.coffee;
+    if (mood.notes) document.getElementById("mood-notes").value = mood.notes;
+}
+loadMood();
+
+/* Magic Button */
+function doMagic() {
+    alert("✨ A little magic for your day ✨");
+}
+
+/* Pet the cats */
+document.getElementById("cat-left").onclick = () => {
+    let c = document.getElementById("cat-left");
+    c.classList.add("petting");
+    setTimeout(() => c.classList.remove("petting"), 400);
 };
-
-/* -------------------- CAT INTERACTION -------------------- */
-function showToast(msg){
-  const t=document.getElementById("toast");
-  t.textContent=msg;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),1500);
-}
-document.querySelectorAll(".cat").forEach(cat=>{
-  cat.onclick=()=>showToast("The cat purrs softly...");
-});
-
-/* -------------------- TO‑DO LIST -------------------- */
-let tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-
-function saveTasks(){
-  localStorage.setItem("tasks",JSON.stringify(tasks));
-}
-
-function renderTasks(){
-  const list=document.getElementById("todoList");
-  list.innerHTML="";
-  tasks.forEach((task,i)=>{
-    const row=document.createElement("div");
-    row.className="todo-item";
-
-    const box=document.createElement("input");
-    box.type="checkbox";
-    box.checked=task.done;
-    box.onchange=()=>{
-      tasks[i].done=box.checked;
-      saveTasks();
-    };
-
-    const text=document.createElement("input");
-    text.type="text";
-    text.value=task.text;
-    text.oninput=()=>{
-      tasks[i].text=text.value;
-      saveTasks();
-    };
-
-    const del=document.createElement("span");
-    del.className="delete-btn";
-    del.innerHTML="✖";
-    del.onclick=()=>{
-      tasks.splice(i,1);
-      saveTasks();
-      renderTasks();
-    };
-
-    row.appendChild(box);
-    row.appendChild(text);
-    row.appendChild(del);
-    list.appendChild(row);
-  });
-}
-
-document.getElementById("addTask").onclick=()=>{
-  tasks.push({text:"New task",done:false});
-  saveTasks();
-  renderTasks();
+document.getElementById("cat-right").onclick = () => {
+    let c = document.getElementById("cat-right");
+    c.classList.add("petting");
+    setTimeout(() => c.classList.remove("petting"), 400);
 };
-
-renderTasks();
 </script>
 
 </body>
