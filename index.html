@@ -1,450 +1,902 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Olivia’s Cozy Café</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-/* -------------------- COLORS -------------------- */
-:root {
-  --accent:#f4b27a;
-  --soft:#f8d4a8;
-  --cream:#fff3e0;
-  --outline:#5b3a2a;
-  --blush:#f7a6a6;
-  --bg:#1a0f0a;
-  --text:#fdf5e9;
-  --muted:#e3d2c0;
-}
-
-/* -------------------- GLOBAL -------------------- */
-body {
-  margin:0;
-  font-family:"Segoe UI",sans-serif;
-  color:var(--text);
-  background:#1a0f0a;
-  overflow-x:hidden;
-  font-size:14px;
-}
-
-/* -------------------- BACKGROUND -------------------- */
-.background {
-  position:fixed; inset:0;
-  background:url("https://img.magnific.com/premium-photo/serene-sunset-scene-featuring-sleeping-cat-balcony-surrounded-by-plants-books_1383414-2910.jpg?semt=ais_hybrid&w=740&q=80")
-    center/cover no-repeat;
-  filter:blur(2px) brightness(0.7);
-  z-index:-2;
-}
-.overlay {
-  position:fixed; inset:0;
-  background:radial-gradient(circle at top,rgba(255,210,150,.35),transparent 55%),
-             linear-gradient(to bottom,rgba(15,8,5,.7),rgba(10,5,3,.95));
-  z-index:-1;
-}
-body.night .background { filter:blur(2px) brightness(0.4); }
-body.night .overlay {
-  background:radial-gradient(circle at top,rgba(120,160,255,.25),transparent 55%),
-             linear-gradient(to bottom,rgba(5,8,20,.9),rgba(3,5,12,.98));
-}
-
-/* -------------------- LEAVES -------------------- */
-.leaf {
-  position:fixed;
-  width:6px; height:10px;
-  background:rgba(255,200,140,.55);
-  border-radius:50%;
-  opacity:.5;
-  animation:fall linear infinite;
-  filter:blur(0.3px);
-}
-@keyframes fall {
-  0% { transform:translateY(-10vh) translateX(0) rotate(0); }
-  100% { transform:translateY(110vh) translateX(10px) rotate(120deg); }
-}
-
-/* -------------------- SPARKLES -------------------- */
-.sparkle {
-  position:fixed;
-  width:4px; height:4px;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:0 0 8px #fff;
-  animation:spark 6s linear infinite;
-}
-@keyframes spark {
-  0% { transform:translateY(100vh) scale(.4); opacity:0; }
-  20% { opacity:1; }
-  100% { transform:translateY(-10vh) scale(1); opacity:0; }
-}
-
-/* -------------------- GRID LAYOUT -------------------- */
-.container {
-  max-width:1100px;
-  margin:0 auto;
-  padding:20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-  gap:20px;
-}
-
-/* -------------------- CARDS -------------------- */
-.card {
-  background:rgba(35,22,18,.9);
-  border-radius:18px;
-  padding:15px;
-  box-shadow:0 18px 40px rgba(0,0,0,.55);
-}
-h1 { font-size:1.4rem; margin:0 0 10px; }
-h3 { font-size:1.1rem; margin:0 0 8px; }
-button {
-  background:linear-gradient(135deg,#f7c08a,#f39b7a);
-  border:none;
-  border-radius:999px;
-  padding:6px 14px;
-  font-weight:600;
-  color:#3b1f12;
-  cursor:pointer;
-}
-button:hover { filter:brightness(1.1); }
-
-/* -------------------- CATS -------------------- */
-.cat {
-  position:fixed;
-  width:100px; height:100px;
-  z-index:5;
-  cursor:pointer;
-}
-.cat svg { width:100%; height:100%; }
-.cat.left { bottom:10px; left:10px; }
-.cat.right { bottom:10px; right:10px; }
-
-.cat-body {
-  transform-origin:50% 60%;
-  animation:breath 4s ease-in-out infinite;
-}
-@keyframes breath {
-  0%,100% { transform:scale(1); }
-  50% { transform:scale(1.03); }
-}
-
-.cat.patting .cat-body {
-  animation:pat 0.4s ease;
-}
-@keyframes pat {
-  0% { transform:translateY(0) scale(1.03); }
-  50% { transform:translateY(2px) scale(1.06); }
-  100% { transform:translateY(0) scale(1.03); }
-}
-
-.cat-face {
-  transition:transform 0.2s;
-}
-.cat.patting .cat-face {
-  transform:translateY(-1px);
-}
-
-.toast {
-  position:fixed;
-  left:50%; bottom:80px;
-  transform:translateX(-50%);
-  background:rgba(25,15,10,.96);
-  border-radius:999px;
-  padding:8px 16px;
-  font-size:.85rem;
-  border:1px solid rgba(255,255,255,.18);
-  opacity:0;
-  transition:.25s;
-}
-.toast.show {
-  opacity:1;
-  transform:translateX(-50%) translateY(-4px);
-}
-
-/* -------------------- LINKS -------------------- */
-.links a {
-  display:inline-block;
-  margin:4px;
-  padding:6px 12px;
-  border-radius:999px;
-  background:rgba(30,18,12,.9);
-  color:#ffd59b;
-  text-decoration:none;
-  font-size:.85rem;
-}
-.links a:hover {
-  background:rgba(50,30,20,.95);
-  color:#ffe9c7;
-}
-
-/* -------------------- TO‑DO LIST -------------------- */
-.todo-item {
-  display:flex;
-  align-items:center;
-  margin:6px 0;
-}
-.todo-item input[type="checkbox"] {
-  width:18px; height:18px;
-  margin-right:10px;
-  accent-color:#f4b27a;
-}
-.todo-item input[type="text"] {
-  flex:1;
-  background:transparent;
-  border:none;
-  border-bottom:1px dashed rgba(255,255,255,.2);
-  color:var(--text);
-  font-size:1rem;
-}
-.todo-item input[type="text"]:focus {
-  outline:none;
-  border-bottom:1px solid var(--accent);
-}
-.delete-btn {
-  margin-left:10px;
-  cursor:pointer;
-  color:#ffb3b3;
-  font-size:1.2rem;
-}
-
-/* -------------------- MOOD NOTEBOOK -------------------- */
-.mood-wrapper {
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-.mood-today {
-  background:rgba(50,30,20,.9);
-  border-radius:14px;
-  padding:12px;
-}
-.mood-row {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:6px;
-}
-.mood-row select {
-  background:rgba(20,10,5,.9);
-  color:var(--text);
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.2);
-  padding:4px 10px;
-}
-#moodNote {
-  width:100%;
-  min-height:60px;
-  margin-top:6px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,.2);
-  background:rgba(20,10,5,.9);
-  color:var(--text);
-  padding:6px 8px;
-  resize:vertical;
-}
-
-/* calendar */
-.mood-calendar {
-  background:rgba(50,30,20,.9);
-  border-radius:14px;
-  padding:12px;
-}
-.calendar-grid {
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:4px;
-  font-size:.75rem;
-}
-.calendar-day-header {
-  text-align:center;
-  color:var(--muted);
-}
-.calendar-cell {
-  height:32px;
-  border-radius:8px;
-  background:rgba(30,18,12,.9);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  border:1px solid transparent;
-}
-.calendar-cell.today {
-  border-color:var(--accent);
-}
-.calendar-cell span.date {
-  font-size:.7rem;
-  color:var(--muted);
-}
-.calendar-cell span.coffee {
-  font-size:1rem;
-}
-
-/* audio hidden */
-#lofiAudio, #meowAudio { display:none; }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Olivia’s Cozy Café</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<div class="background"></div>
-<div class="overlay"></div>
 
-<!-- -------------------- LEFT CAT -------------------- -->
-<div class="cat left">
-  <svg viewBox="0 0 200 200">
-    <g class="cat-body">
-      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
-        d="M60 130 Q40 110 50 85 Q60 60 95 55 Q130 50 150 75 Q165 95 155 120 Q145 145 110 150 Q80 150 60 130Z"/>
-      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
-        d="M150 120 Q170 130 175 145 Q165 155 155 150 Q150 140 150 120Z"/>
-    </g>
-    <g class="cat-face">
-      <path fill="#d9b48a" stroke="#5b3a2a" stroke-width="3"
-        d="M85 80 Q100 60 115 80 Q120 95 115 110 Q100 125 85 110 Q80 95 85 80Z"/>
-      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
-        d="M80 78 L75 60 L90 72Z"/>
-      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
-        d="M120 78 L125 60 L110 72Z"/>
-      <path d="M92 95 Q97 100 102 95" stroke="#5b3a2a" stroke-width="2" fill="none"/>
-      <path d="M108 95 Q113 100 118 95" stroke="#5b3a2a" stroke-width="2" fill="none"/>
-      <path d="M100 105 Q105 108 110 105" stroke="#5b3a2a" stroke-width="2" fill="none"/>
-      <circle cx="90" cy="102" r="3" fill="#f7a6a6" opacity=".7"/>
-      <circle cx="120" cy="102" r="3" fill="#f7a6a6" opacity=".7"/>
-    </g>
-  </svg>
-</div>
+    <!-- Background + overlays -->
+    <div id="background"></div>
+    <div id="overlay"></div>
 
-<!-- -------------------- RIGHT CAT -------------------- -->
-<div class="cat right">
-  <svg viewBox="0 0 200 200">
-    <g class="cat-body">
-      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
-        d="M60 130 Q70 100 110 95 Q145 95 165 115 Q175 130 165 145 Q150 160 115 155 Q80 150 60 130Z"/>
-      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
-        d="M165 135 Q185 140 190 155 Q180 165 170 160 Q168 150 165 135Z"/>
-    </g>
-    <g class="cat-face">
-      <ellipse cx="95" cy="115" rx="22" ry="18" fill="#d9b48a" stroke="#5b3a2a" stroke-width="3"/>
-      <path fill="#b8793f" stroke="#5b3a2a" stroke-width="3"
-        d="M80 105 L75 88 L92 100Z"/>
-      <path d="M90 115 Q95 120 100 115" stroke="#5b3a2a" stroke-width="2" fill="none"/>
-      <path d="M92 125 Q98 128 104 125" stroke="#5b3a2a" stroke-width="2" fill="none"/>
-      <circle cx="85" cy="122" r="3" fill="#f7a6a6" opacity=".7"/>
-    </g>
-  </svg>
-</div>
+    <!-- Falling leaves -->
+    <div id="leaves-container"></div>
 
-<audio id="meowAudio">
-  <source src="https://actions.google.com/sounds/v1/animals/cat_meow.ogg" type="audio/ogg">
-</audio>
-<audio id="lofiAudio" loop>
-  <source src="https://files.catbox.moe/1x9j8p.mp3" type="audio/mp3">
-</audio>
+    <!-- Sparkles -->
+    <div id="sparkles"></div>
 
-<div class="toast" id="toast"></div>
-
-<!-- -------------------- CONTENT -------------------- -->
-<div class="container">
-
-  <div class="card">
-    <h1>Olivia’s Cozy Café ☕🐈</h1>
-    <p>Welcome to your warm digital nook — sip, breathe, and relax.</p>
-    <button id="magic">✨ Magic Mood Button</button>
-  </div>
-
-  <div class="card" id="calendar">
-    <h3>Today</h3>
-    <div id="date"></div>
-    <div id="time"></div>
-  </div>
-
-  <div class="card" id="quote">
-    <h3>Daily Cozy Quote</h3>
-    <p id="quoteText"></p>
-  </div>
-
-  <div class="card links">
-    <h3>Café Links</h3>
-    <a href="https://www.google.com" target="_blank">🔍 Google</a>
-    <a href="https://music.youtube.com" target="_blank">🎧 YouTube Music</a>
-    <a href="https://www.pinterest.com" target="_blank">📌 Pinterest</a>
-    <a href="https://mail.google.com" target="_blank">✉️ Gmail</a>
-  </div>
-
-  <div class="card">
-    <h3>To‑Do List</h3>
-    <div id="todoList"></div>
-    <button id="addTask">➕ Add Task</button>
-  </div>
-
-  <div class="card">
-    <h3>☕ Mood Notebook</h3>
-    <div class="mood-wrapper">
-      <div class="mood-today">
-        <strong>Today’s Coffee Mood</strong>
-        <div class="mood-row">
-          <label for="moodLevel">Mood level:</label>
-          <select id="moodLevel">
-            <option value="0">0 ☕ (empty cup)</option>
-            <option value="1">1 ☕</option>
-            <option value="2">2 ☕☕</option>
-            <option value="3">3 ☕☕☕</option>
-            <option value="4">4 ☕☕☕☕</option>
-            <option value="5">5 ☕☕☕☕☕</option>
-          </select>
-          <span class="cups" id="moodCups">☕</span>
-        </div>
-        <textarea id="moodNote" placeholder="Little note about how you’re feeling today..."></textarea>
-        <button id="saveMood">Save today’s mood</button>
-      </div>
-
-      <div class="mood-calendar">
-        <h4>Coffee Mood Calendar</h4>
-        <div id="calendarMonth"></div>
-        <div class="calendar-grid" id="moodCalendarGrid"></div>
-      </div>
+    <!-- Lofi Cats -->
+    <div id="left-cat" class="cat-container">
+        <!-- SVG injected by JS -->
     </div>
-  </div>
 
-</div>
+    <div id="right-cat" class="cat-container">
+        <!-- SVG injected by JS -->
+    </div>
 
-<script>
-/* -------------------- LEAVES -------------------- */
-for(let i=0;i<10;i++){
-  const l=document.createElement("div");
-  l.className="leaf";
-  l.style.left=Math.random()*100+"vw";
-  l.style.animationDuration=10+Math.random()*8+"s";
-  l.style.animationDelay=Math.random()*6+"s";
-  document.body.appendChild(l);
+    <!-- Main container -->
+    <div class="dashboard">
+
+        <!-- 1. Welcome -->
+        <section class="card welcome-card">
+            <h1>Welcome back, Olivia ☕</h1>
+            <p>Your cozy café space is ready.</p>
+        </section>
+
+        <!-- 2. Time + Date -->
+        <section class="card time-card">
+            <h2>Today</h2>
+            <div id="time"></div>
+            <div id="date"></div>
+        </section>
+
+        <!-- 3. Quote -->
+        <section class="card quote-card">
+            <h2>Daily Quote</h2>
+            <p id="quote-text"></p>
+        </section>
+
+        <!-- 4. Links -->
+        <section class="card links-card">
+            <h2>Quick Links</h2>
+            <ul id="links-list">
+                <li><a href="https://www.google.com" target="_blank">Google</a></li>
+                <li><a href="https://www.youtube.com" target="_blank">YouTube</a></li>
+                <li><a href="https://open.spotify.com" target="_blank">Spotify</a></li>
+            </ul>
+        </section>
+
+        <!-- 5. To‑Do List -->
+        <section class="card todo-card">
+            <h2>To‑Do List</h2>
+            <div id="todo-container">
+                <input id="todo-input" type="text" placeholder="Add a task..." />
+                <button id="add-todo">+</button>
+                <ul id="todo-list"></ul>
+            </div>
+        </section>
+
+        <!-- 6. Mood Notebook -->
+        <section class="card notebook-card">
+            <h2>Mood Notebook</h2>
+            <textarea id="mood-text" placeholder="How are you feeling today?"></textarea>
+        </section>
+
+        <!-- 7. Mood Calendar -->
+        <section class="card calendar-card">
+            <h2>Mood Calendar</h2>
+            <div id="calendar"></div>
+        </section>
+
+    </div>
+
+    <!-- Audio -->
+    <audio id="lofi-audio" src="lofi.mp3" preload="auto"></audio>
+    <audio id="meow-sound" src="meow.mp3" preload="auto"></audio>
+
+    <!-- Toast -->
+    <div id="toast"></div>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+
+</body>
+</html>
+:root {
+  --bg-dark: #1b1410;
+  --bg-card: rgba(34, 25, 20, 0.92);
+  --bg-card-soft: rgba(34, 25, 20, 0.85);
+  --accent: #f2c48d;
+  --accent-soft: #f7d7a8;
+  --accent-strong: #f0a96a;
+  --text-main: #fdf5ec;
+  --text-soft: #e2d4c4;
+  --text-muted: #b89c84;
+  --border-soft: rgba(242, 196, 141, 0.35);
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.55);
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+  --transition-fast: 0.18s ease-out;
+  --transition-med: 0.28s ease-out;
 }
 
-/* -------------------- SPARKLES -------------------- */
-for(let i=0;i<18;i++){
-  const s=document.createElement("div");
-  s.className="sparkle";
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDelay=Math.random()*6+"s";
-  s.style.animationDuration=5+Math.random()*6+"s";
-  document.body.appendChild(s);
+/* Reset-ish */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* -------------------- DATE + TIME -------------------- */
-function updateTime(){
-  const n=new Date();
-  document.getElementById("date").textContent =
-    n.toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});
-  document.getElementById("time").textContent =
-    n.toLocaleTimeString();
+html, body {
+  height: 100%;
 }
-setInterval(updateTime,1000);
+
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: radial-gradient(circle at top, #3b261a 0, #120c09 55%, #080506 100%);
+  color: var(--text-main);
+  overflow: hidden;
+}
+
+/* Background + overlay */
+#background {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(242, 196, 141, 0.18), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(180, 120, 80, 0.25), transparent 60%),
+    linear-gradient(135deg, #1a120e, #0b0706);
+  z-index: -3;
+}
+
+#overlay {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at top, rgba(0, 0, 0, 0.55), transparent 60%),
+    radial-gradient(circle at bottom, rgba(0, 0, 0, 0.65), transparent 65%);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: -2;
+}
+
+/* Leaves */
+#leaves-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.leaf {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 20%, #f7d7a8, #c47b3b);
+  border-radius: 40% 60% 60% 40%;
+  opacity: 0.9;
+  filter: blur(0.2px);
+  animation: fall linear forwards;
+}
+
+.leaf::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: inherit;
+  border: 1px solid rgba(60, 30, 10, 0.35);
+}
+
+@keyframes fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotateZ(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(-40px, 110vh, 0) rotateZ(220deg);
+    opacity: 0;
+  }
+}
+
+/* Sparkles */
+#sparkles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.sparkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 244, 220, 0.9);
+  box-shadow: 0 0 8px rgba(255, 244, 220, 0.9);
+  opacity: 0;
+  animation: sparkle 2.4s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Cats */
+.cat-container {
+  position: fixed;
+  bottom: 18px;
+  width: 120px;
+  height: 120px;
+  z-index: 6;
+  cursor: pointer;
+  transform-origin: center bottom;
+  animation: cat-breathe 4.2s ease-in-out infinite;
+}
+
+#left-cat {
+  left: 18px;
+}
+
+#right-cat {
+  right: 18px;
+}
+
+.cat-container svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* breathing scale (outline scales with it) */
+@keyframes cat-breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+/* pat feedback */
+.cat-container:active {
+  transform: scale(0.97);
+}
+
+/* Dashboard layout */
+.dashboard {
+  position: relative;
+  z-index: 4;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 18px 22px 26px;
+  border-radius: 26px;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.04), transparent 55%),
+              radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.55), transparent 60%),
+              rgba(10, 6, 4, 0.9);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: minmax(120px, auto);
+  gap: 14px;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(14px);
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), transparent 55%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.card h1,
+.card h2 {
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--accent-soft);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.card h1 {
+  font-size: 1.4rem;
+}
+
+.card h2 {
+  font-size: 1.05rem;
+}
+
+.card p,
+.card li,
+.card span,
+.card div {
+  font-size: 0.86rem;
+  color: var(--text-soft);
+}
+
+/* Layout mapping */
+.welcome-card {
+  grid-column: span 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.time-card {
+  grid-column: span 2;
+}
+
+.quote-card {
+  grid-column: span 2;
+}
+
+.links-card {
+  grid-column: span 2;
+}
+
+.todo-card {
+  grid-column: span 2;
+}
+
+.notebook-card {
+  grid-column: span 2;
+}
+
+.calendar-card {
+  grid-column: span 2;
+}
+
+/* Welcome */
+.welcome-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Time + date */
+#time {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--accent-soft);
+}
+
+#date {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Quote */
+.quote-card p {
+  font-style: italic;
+}
+
+/* Links */
+.links-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.links-card a {
+  color: var(--accent-soft);
+  text-decoration: none;
+  font-size: 0.86rem;
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(242, 196, 141, 0.08);
+  border: 1px solid rgba(242, 196, 141, 0.18);
+  transition: background var(--transition-fast), transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.links-card a:hover {
+  background: rgba(242, 196, 141, 0.18);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* To‑do */
+#todo-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#todo-input {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(242, 196, 141, 0.3);
+  background: rgba(10, 6, 4, 0.9);
+  color: var(--text-main);
+  font-size: 0.86rem;
+  outline: none;
+}
+
+#todo-input::placeholder {
+  color: var(--text-muted);
+}
+
+#add-todo {
+  align-self: flex-end;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--accent-strong);
+  color: #2b160b;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+    background var(--transition-fast);
+}
+
+#add-todo:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
+  background: #f3b06f;
+}
+
+#todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card-soft);
+  border: 1px solid rgba(242, 196, 141, 0.18);
+  font-size: 0.84rem;
+}
+
+.todo-item span {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.todo-item button {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* Notebook */
+.notebook-card textarea {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(242, 196, 141, 0.3);
+  background: rgba(10, 6, 4, 0.9);
+  color: var(--text-main);
+  padding: 8px 10px;
+  font-size: 0.86rem;
+  outline: none;
+}
+
+/* Calendar */
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  font-size: 0.7rem;
+}
+
+.calendar-day {
+  padding: 4px 0;
+  text-align: center;
+  border-radius: 8px;
+  background: rgba(20, 12, 8, 0.9);
+  border: 1px solid rgba(242, 196, 141, 0.18);
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.calendar-day:hover {
+  background: rgba(242, 196, 141, 0.16);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55);
+}
+
+.calendar-day.mood-good {
+  background: rgba(120, 190, 130, 0.3);
+  border-color: rgba(120, 190, 130, 0.7);
+}
+
+.calendar-day.mood-okay {
+  background: rgba(242, 196, 141, 0.3);
+  border-color: rgba(242, 196, 141, 0.7);
+}
+
+.calendar-day.mood-bad {
+  background: rgba(200, 90, 90, 0.3);
+  border-color: rgba(200, 90, 90, 0.7);
+}
+
+/* Toast */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(15, 9, 6, 0.96);
+  border: 1px solid rgba(242, 196, 141, 0.4);
+  color: var(--text-main);
+  font-size: 0.86rem;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+  transition: transform 0.35s ease-out, opacity 0.35s ease-out;
+}
+
+#toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Scrollbars (for lists/textarea) */
+#todo-list::-webkit-scrollbar,
+.notebook-card textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+#todo-list::-webkit-scrollbar-thumb,
+.notebook-card textarea::-webkit-scrollbar-thumb {
+  background: rgba(242, 196, 141, 0.4);
+  border-radius: 999px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 24px auto;
+  }
+
+  .welcome-card {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    overflow-y: auto;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+    margin: 18px auto 80px;
+  }
+
+  .welcome-card,
+  .time-card,
+  .quote-card,
+  .links-card,
+  .todo-card,
+  .notebook-card,
+  .calendar-card {
+    grid-column: span 1;
+  }
+
+  #left-cat {
+    left: 8px;
+  }
+
+  #right-cat {
+    right: 8px;
+  }
+}
+/* ------------------------------
+   UTILITIES
+------------------------------ */
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2600);
+}
+
+/* ------------------------------
+   TIME + DATE
+------------------------------ */
+
+function updateTime() {
+    const now = new Date();
+    const time = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const date = now.toLocaleDateString([], { weekday: "long", month: "long", day: "numeric" });
+
+    document.getElementById("time").textContent = time;
+    document.getElementById("date").textContent = date;
+}
+
+setInterval(updateTime, 1000);
 updateTime();
 
-/* -------------------- QUOTES -------------------- */
-const quotes=[
-  "Take a deep breath — you’re doing beautifully.",
-  "Small steps still move you forward.",
-  "You deserve soft moments and warm light.",
-  "Rest is productive too.",
-  "You are allowed to
+/* ------------------------------
+   QUOTES
+------------------------------ */
+
+const quotes = [
+    "Take things slow today.",
+    "You’re doing better than you think.",
+    "Small steps still move you forward.",
+    "You deserve rest and warmth.",
+    "Breathe. You’re safe here.",
+    "One cozy moment at a time."
+];
+
+function loadQuote() {
+    const q = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById("quote-text").textContent = q;
+}
+
+loadQuote();
+
+/* ------------------------------
+   TO‑DO LIST
+------------------------------ */
+
+const todoInput = document.getElementById("todo-input");
+const todoList = document.getElementById("todo-list");
+const addTodoBtn = document.getElementById("add-todo");
+
+function saveTodos() {
+    const items = [...document.querySelectorAll(".todo-item span")].map(s => s.textContent);
+    localStorage.setItem("todos", JSON.stringify(items));
+}
+
+function loadTodos() {
+    const saved = JSON.parse(localStorage.getItem("todos") || "[]");
+    saved.forEach(text => addTodo(text));
+}
+
+function addTodo(text) {
+    const li = document.createElement("li");
+    li.className = "todo-item";
+
+    const span = document.createElement("span");
+    span.textContent = text;
+
+    const del = document.createElement("button");
+    del.textContent = "✕";
+    del.onclick = () => {
+        li.remove();
+        saveTodos();
+    };
+
+    li.appendChild(span);
+    li.appendChild(del);
+    todoList.appendChild(li);
+}
+
+addTodoBtn.onclick = () => {
+    const text = todoInput.value.trim();
+    if (!text) return;
+    addTodo(text);
+    saveTodos();
+    todoInput.value = "";
+};
+
+loadTodos();
+
+/* ------------------------------
+   MOOD NOTEBOOK
+------------------------------ */
+
+const moodText = document.getElementById("mood-text");
+
+moodText.value = localStorage.getItem("mood") || "";
+
+moodText.addEventListener("input", () => {
+    localStorage.setItem("mood", moodText.value);
+});
+
+/* ------------------------------
+   MOOD CALENDAR
+------------------------------ */
+
+const calendar = document.getElementById("calendar");
+const today = new Date();
+const year = today.getFullYear();
+const month = today.getMonth();
+
+function buildCalendar() {
+    calendar.innerHTML = "";
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const days = new Date(year, month + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement("div");
+        calendar.appendChild(empty);
+    }
+
+    const saved = JSON.parse(localStorage.getItem("mood-calendar") || "{}");
+
+    for (let d = 1; d <= days; d++) {
+        const cell = document.createElement("div");
+        cell.className = "calendar-day";
+        cell.textContent = d;
+
+        const key = `${year}-${month}-${d}`;
+        if (saved[key]) cell.classList.add(saved[key]);
+
+        cell.onclick = () => {
+            const mood = prompt("Mood? (good / okay / bad)");
+            if (!mood) return;
+
+            cell.classList.remove("mood-good", "mood-okay", "mood-bad");
+
+            if (mood === "good") cell.classList.add("mood-good");
+            if (mood === "okay") cell.classList.add("mood-okay");
+            if (mood === "bad") cell.classList.add("mood-bad");
+
+            saved[key] = cell.classList[1];
+            localStorage.setItem("mood-calendar", JSON.stringify(saved));
+        };
+
+        calendar.appendChild(cell);
+    }
+}
+
+buildCalendar();
+
+/* ------------------------------
+   LOFI AUDIO
+------------------------------ */
+
+const lofiAudio = document.getElementById("lofi-audio");
+
+document.body.addEventListener("click", () => {
+    if (lofiAudio.paused) {
+        lofiAudio.volume = 0.45;
+        lofiAudio.play();
+        showToast("Lofi playing");
+    }
+}, { once: true });
+
+/* ------------------------------
+   SPARKLES
+------------------------------ */
+
+function spawnSparkle() {
+    const s = document.createElement("div");
+    s.className = "sparkle";
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.top = Math.random() * 100 + "vh";
+    s.style.animationDelay = Math.random() * 2 + "s";
+
+    document.getElementById("sparkles").appendChild(s);
+
+    setTimeout(() => s.remove(), 2400);
+}
+
+setInterval(spawnSparkle, 350);
+
+/* ------------------------------
+   FALLING LEAVES
+------------------------------ */
+
+function spawnLeaf() {
+    const leaf = document.createElement("div");
+    leaf.className = "leaf";
+
+    leaf.style.left = Math.random() * 100 + "vw";
+    leaf.style.animationDuration = 6 + Math.random() * 4 + "s";
+
+    document.getElementById("leaves-container").appendChild(leaf);
+
+    setTimeout(() => leaf.remove(), 11000);
+}
+
+setInterval(spawnLeaf, 900);
+
+/* ------------------------------
+   LOFI CATS (SVG + INTERACTION)
+------------------------------ */
+
+const leftCat = document.getElementById("left-cat");
+const rightCat = document.getElementById("right-cat");
+const meow = document.getElementById("meow-sound");
+
+/* Soft café‑tone gradient + soft brown outlines */
+const curledCatSVG = `
+<svg viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="catGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e3c7"/>
+      <stop offset="100%" stop-color="#c48a55"/>
+    </linearGradient>
+  </defs>
+
+  <g stroke="#5a3b28" stroke-width="3" fill="url(#catGrad)" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="60" cy="48" r="26"/>
+    <path d="M34 70 Q60 100 86 70 Q60 60 34 70 Z"/>
+    <path d="M86 70 Q100 80 94 92 Q82 88 86 70 Z"/>
+    <circle cx="52" cy="45" r="3" fill="#5a3b28"/>
+    <circle cx="68" cy="45" r="3" fill="#5a3b28"/>
+    <path d="M54 58 Q60 62 66 58" stroke="#5a3b28" stroke-width="3" fill="none"/>
+  </g>
+</svg>
+`;
+
+const sideCatSVG = `
+<svg viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="catGrad2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e3c7"/>
+      <stop offset="100%" stop-color="#c48a55"/>
+    </linearGradient>
+  </defs>
+
+  <g stroke="#5a3b28" stroke-width="3" fill="url(#catGrad2)" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="70" cy="70" rx="32" ry="22"/>
+    <circle cx="40" cy="60" r="20"/>
+    <path d="M30 48 L24 38 L40 44 Z"/>
+    <path d="M50 48 L56 38 L40 44 Z"/>
+    <circle cx="34" cy="58" r="3" fill="#5a3b28"/>
+    <circle cx="46" cy="58" r="3" fill="#5a3b28"/>
+    <path d="M36 68 Q40 72 44 68" stroke="#5a3b28" stroke-width="3" fill="none"/>
+    <path d="M102 70 Q112 78 104 88 Q94 84 102 70 Z"/>
+  </g>
+</svg>
+`;
+
+leftCat.innerHTML = curledCatSVG;
+rightCat.innerHTML = sideCatSVG;
+
+leftCat.onclick = () => {
+    meow.currentTime = 0;
+    meow.play();
+    showToast("Pat pat");
+};
+
+rightCat.onclick = () => {
+    meow.currentTime = 0;
+    meow.play();
+    showToast("Pat pat");
+};
